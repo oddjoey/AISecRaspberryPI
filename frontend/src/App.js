@@ -4,6 +4,11 @@ import './App.css';
 import Navbar from './Navbar';
 import logo from './logo.svg';
 
+import Live from './components/live';
+import About from './components/about';
+import Account from './components/account';
+import Dashboard from './components/dashboard';
+
 const Home = () => (
   <header className="App-header">
     <img src={logo} className="App-logo" alt="logo" />
@@ -19,12 +24,6 @@ const Home = () => (
   </header>
 );
 
-const Live = () => <div>Live Page</div>;
-const Dashboard = () => <div>Dashboard Page</div>;
-const About = () => <div>About Page</div>;
-const Contact = () => <div>Contact Page</div>;
-const Account = () => <div>Account Page</div>;
-
 function App() {
   return (
     <Router>
@@ -35,7 +34,6 @@ function App() {
           <Route path="/live" element={<Live />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
           <Route path="/account" element={<Account />} />
         </Routes>
       </div>
