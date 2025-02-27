@@ -4,7 +4,6 @@ const Account = () => {
     return (
         <div className="account-page">
             <h1>About Us</h1>
-            {/*Account info*/}
         </div>
     );
 };
