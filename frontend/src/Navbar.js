@@ -29,9 +29,9 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-right">
-        <a href="/account" className="user-icon">
-          <i className="fas fa-user"></i>
-        </a>
+        <Link to="/account" className="user-icon">
+        <i className="fas fa-user"></i> <span className="user-text">User</span>
+        </Link>
       </div>
     </nav>
   );
