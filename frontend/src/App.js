@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Navbar from './Navbar';
+import SecurityPanel from './components/SecurityPanel';
 
 import Home from './components/home';
 import Live from './components/live';
@@ -20,6 +21,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/about" element={<About />} />
           <Route path="/account" element={<Account />} />
+          <Route path="/security-panel" element={<SecurityPanel />} />
         </Routes>
       </div>
     </Router>
