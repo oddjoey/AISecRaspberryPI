@@ -1,38 +1,65 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { 
-  FaDoorOpen, 
-  FaExclamationTriangle, 
-  FaRadiation,
-  FaHome,
-  FaVideo,
-  FaUsers,
-  FaCog,
-  FaSignOutAlt,
-  FaQuestionCircle,
-  FaFire,
-  FaWater,
-  FaGasPump,
-  FaHouseDamage
-} from 'react-icons/fa';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { FaHome, FaVideo, FaUsers, FaCog, FaSignOutAlt, FaQuestionCircle, FaCamera,FaBars, FaDoorClosed, FaExclamationTriangle, FaRadiationAlt, FaFire, FaTint, FaGasPump, FaBuilding} from 'react-icons/fa';
+import { MdSecurity } from 'react-icons/md';
+import { BiCctv } from 'react-icons/bi';
 
 const SecurityPanel = () => {
-  const navigate = useNavigate();
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+
+  const notifications = [
+    { icon: <FaDoorClosed className="text-blue-500" />,
+      title: "Front Door Opened",
+      time: "2025-03-15 08:30 AM" },
+    { icon: <FaExclamationTriangle className="text-yellow-500" />,
+      title: "Motion Detected - Backyard", 
+      time: "2025-03-15 02:45 AM" },
+    { icon: <FaRadiationAlt className="text-red-500" />,
+      title: "Smoke Detected - Kitchen",
+      time: "2025-03-14 07:15 PM" }
+  ];
+
+  const alerts = [
+    { icon: <FaFire className="text-red-500" />,
+      title: "Fire Alert", status: "No fire detected" },
+    { icon: <FaTint className="text-blue-500" />,
+      title: "Flood Alert", status: "No flood detected" },
+    { icon: <FaGasPump className="text-yellow-500" />,
+      title: "Gas Leak Alert", status: "No gas leak detected" },
+    { icon: <FaBuilding className="text-gray-500" />,
+      title: "Earthquake Alert",
+      status: "No seismic activity detected" }
+  ];
 
   return (
     <div className="flex h-screen bg-gray-100">
+      {/* Mobile menu button */}
+      <button 
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+        className="lg:hidden fixed top-4 left-4 z-20 p-2 rounded-md bg-gray-800 text-white"
+      >
+        <FaBars />
+      </button>
+
       {/* Sidebar */}
-      <div className="w-64 bg-white shadow-lg">
+      <div className={`
+        ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+        transform transition-transform duration-300 ease-in-out
+        fixed lg:static lg:translate-x-0
+        w-64 h-full bg-white shadow-lg z-10
+      `}>
         <div className="p-4 font-bold text-lg border-b">AI Security System</div>
         <nav className="mt-4">
           <Link to="/">
             <SidebarLink icon={<FaHome />} text="Homepage" />
           </Link>
-          <SidebarLink icon={<FaExclamationTriangle />} text="Security Panel" active />
-          <SidebarLink icon={<FaVideo />} text="Detection Data" />
+          <SidebarLink icon={<MdSecurity />} text="Security Panel" active />
+          <Link to="/detection-data">
+            <SidebarLink icon={<BiCctv />} text="Detection Data" />
+          </Link>
           <SidebarLink icon={<FaVideo />} text="Live Feed" />
           <SidebarLink icon={<FaUsers />} text="Guests" />
-          <SidebarLink icon={<FaVideo />} text="Recordings" />
+          <SidebarLink icon={<FaCamera />} text="Recordings" />
           <SidebarLink icon={<FaCog />} text="Account Settings" />
           <SidebarLink icon={<FaCog />} text="System Settings" />
         </nav>
@@ -43,7 +70,7 @@ const SecurityPanel = () => {
       </div>
 
       {/* Security Panel */}
-      <div className="flex-1 p-8">
+      <div className="flex-1 overflow-auto p-4 lg:p-8">
         <h1 className="text-2xl font-bold mb-6">Security Panel</h1>
 
         {/* System Status */}
@@ -58,21 +85,14 @@ const SecurityPanel = () => {
         {/* Notifications */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-6">
           <h2 className="text-lg font-semibold mb-4">Notifications</h2>
-          <NotificationItem 
-            icon={<FaDoorOpen className="text-blue-500" />}
-            title="Front Door Opened"
-            time="2025-03-15 08:30 AM"
-          />
-          <NotificationItem 
-            icon={<FaExclamationTriangle className="text-yellow-500" />}
-            title="Motion Detected - Backyard"
-            time="2025-03-15 02:45 AM"
-          />
-          <NotificationItem 
-            icon={<FaRadiation className="text-red-500" />}
-            title="Smoke Detected - Kitchen"
-            time="2025-03-14 07:15 PM"
-          />
+          {notifications.map((notification, index) => (
+            <NotificationItem 
+              key={index}
+              icon={notification.icon}
+              title={notification.title}
+              time={notification.time}
+            />
+          ))}
         </div>
 
         {/* Intruder Alert */}
@@ -106,26 +126,14 @@ const SecurityPanel = () => {
         <div className="bg-white rounded-lg shadow-md p-6">
           <h2 className="text-lg font-semibold mb-4">Disaster Prevention</h2>
           <div className="grid grid-cols-2 gap-4">
-            <AlertItem 
-              icon={<FaFire className="text-red-500" />}
-              title="Fire Alert"
-              status="No fire detected"
-            />
-            <AlertItem 
-              icon={<FaWater className="text-blue-500" />}
-              title="Flood Alert"
-              status="No flood detected"
-            />
-            <AlertItem 
-              icon={<FaGasPump className="text-yellow-500" />}
-              title="Gas Leak Alert"
-              status="No gas leak detected"
-            />
-            <AlertItem 
-              icon={<FaHouseDamage className="text-gray-500" />}
-              title="Earthquake Alert"
-              status="No seismic activity detected"
-            />
+            {alerts.map((alert, index) => (
+              <AlertItem 
+                key={index}
+                icon={alert.icon}
+                title={alert.title}
+                status={alert.status}
+              />
+            ))}
           </div>
         </div>
       </div>

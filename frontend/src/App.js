@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Navbar from './Navbar';
 import SecurityPanel from './components/SecurityPanel';
+import DetectionData from './components/DetectionData';
 
 import Home from './components/home';
 import Live from './components/live';
@@ -22,6 +23,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/account" element={<Account />} />
           <Route path="/security-panel" element={<SecurityPanel />} />
+          <Route path="/detection-data" element={<DetectionData />} />
         </Routes>
       </div>
     </Router>
