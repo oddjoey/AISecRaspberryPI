@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { FaShieldAlt} from 'react-icons/fa';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -8,8 +9,9 @@ const Navbar = () => {
   return (
     <nav className="navbar" role="navigation">
       <div className="navbar-left">
-        <Link to="/" className ="logo">
-        SafeGuard
+        <Link to="/" className="logo">
+          <FaShieldAlt className="logo-icon" />
+          SafeGuard
         </Link>
       </div>
       <div className="navbar-center">
@@ -29,8 +31,11 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-right">
-        <Link to="/account" className="user-icon">
-        <i className="fas fa-user"></i> <span className="user-text">User</span>
+        <Link to="/sign-up" className="sign-up-btn">
+          Sign Up
+        </Link>
+        <Link to="/login" className="login-btn">
+          Login
         </Link>
       </div>
     </nav>

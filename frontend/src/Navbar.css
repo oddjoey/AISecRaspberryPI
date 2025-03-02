@@ -14,29 +14,55 @@
     text-decoration: none;
   }
   
-  .navbar-center .nav-links {
-    list-style-type: none;
+  .navbar-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
     margin: 0;
     padding: 0;
   }
   
-  .navbar-center .nav-links li {
-    margin-right: 2rem;
+  .nav-links li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.5rem 0;
+    transition: all 0.2s ease;
+    position: relative;
   }
   
-  .navbar-center .nav-links a {
-    color: #fff;
-    text-decoration: none;
+  .nav-links li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background-color: white;
+    transition: all 0.2s ease;
+    transform: translateX(-50%);
   }
-
-  .navbar-center .nav-links a:hover {
-    color: lightskyblue;
+  
+  .nav-links li a:hover::after {
+    width: 100%;
   }
   
   .navbar-right {
     display: flex;
     align-items: center;
+    gap: 1rem;
   }
   
   .navbar-right .cart-icon,
@@ -56,4 +82,96 @@
     position: absolute;
     top: -0.5rem;
     right: -0.5rem;
+  }
+
+  .sign-up-btn {
+    padding: 0.6rem 1.2rem;
+    color: white;
+    text-decoration: none;
+    border: 2px solid white;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    margin-right: 0.5rem;
+  }
+
+  .sign-up-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
+  }
+
+  .login-btn {
+    padding: 0.6rem 1.5rem;
+    background-color: white;
+    color: #1a1a1a;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .login-btn:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .logo-icon {
+    font-size: 1.5rem;
+    color: white;
+  }
+
+  .logo-text {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: white;
+  }
+
+  .logo {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Add hover effect */
+  .logo:hover .logo-icon,
+  .logo:hover .logo-text {
+    opacity: 0.9;
+    transition: opacity 0.2s ease;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 1024px) {
+    .nav-links {
+      gap: 2rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .navbar-center {
+      position: static;
+      transform: none;
+    }
+    
+    .nav-links {
+      gap: 1.5rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .sign-up-btn {
+      display: none;
+    }
+    
+    .login-btn {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.8rem;
+    }
   }
