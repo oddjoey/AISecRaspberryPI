@@ -8,6 +8,7 @@ import LiveFeed from './components/LiveFeed';
 import Guests from './components/Guests';
 import Recordings from './components/Recordings';
 import AccountSettings from './components/AccountSettings';
+import SystemSettings from './components/SystemSettings';
 
 import Home from './components/home';
 import Live from './components/live';
@@ -32,6 +33,7 @@ function App() {
           <Route path="/guests" element={<Guests />} />
           <Route path="/recordings" element={<Recordings />} />
           <Route path="/account-settings" element={<AccountSettings />} />
+          <Route path="/system-settings" element={<SystemSettings />} />
         </Routes>
       </div>
     </Router>
