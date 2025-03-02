@@ -1,13 +1,13 @@
 // src/components/Live.js
 import React from 'react';
 
-const Live = () => {
+const Features = () => {
   return (
-    <div className="live-page">
-      <h1>Live Feed</h1>
+    <div className="features-page">
+      <h1>List of Features</h1>
       {/* Add your live page content */}
     </div>
   );
 };
 
-export default Live;
+export default Features;

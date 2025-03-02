@@ -11,12 +11,12 @@ import AccountSettings from './components/AccountSettings';
 import SystemSettings from './components/SystemSettings';
 import SignUp from './components/SignUp';
 import Login from './components/Login';
-
 import Home from './components/home';
-import Live from './components/live';
+import Live from './components/Features';
 import About from './components/about';
 import Account from './components/account';
 import Dashboard from './components/dashboard';
+import Features from './components/Features';
 
 function App() {
   return (
@@ -25,7 +25,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/live" element={<Live />} />
+          <Route path="/features" element={<Features />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/about" element={<About />} />
           <Route path="/account" element={<Account />} />
