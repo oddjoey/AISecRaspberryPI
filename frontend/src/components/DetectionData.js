@@ -33,7 +33,9 @@ const DetectionData = () => {
             <SidebarLink icon={<MdSecurity />} text="Security Panel" />
           </Link>
           <SidebarLink icon={<BiCctv />} text="Detection Data" active />
-          <SidebarLink icon={<FaVideo />} text="Live Feed" />
+          <Link to="/live-feed">
+            <SidebarLink icon={<FaVideo />} text="Live Feed" />
+          </Link>
           <SidebarLink icon={<FaUsers />} text="Guests" />
           <SidebarLink icon={<FaCamera />} text="Recordings" />
           <SidebarLink icon={<FaCog />} text="Account Settings" />

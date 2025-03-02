@@ -57,8 +57,12 @@ const SecurityPanel = () => {
           <Link to="/detection-data">
             <SidebarLink icon={<BiCctv />} text="Detection Data" />
           </Link>
-          <SidebarLink icon={<FaVideo />} text="Live Feed" />
-          <SidebarLink icon={<FaUsers />} text="Guests" />
+          <Link to="/live-feed">
+            <SidebarLink icon={<FaVideo />} text="Live Feed" />
+          </Link>
+          <Link to="/guests">
+            <SidebarLink icon={<FaUsers />} text="Guests" />
+          </Link>
           <SidebarLink icon={<FaCamera />} text="Recordings" />
           <SidebarLink icon={<FaCog />} text="Account Settings" />
           <SidebarLink icon={<FaCog />} text="System Settings" />
