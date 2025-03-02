@@ -77,20 +77,20 @@ const DetectionData = () => {
             </button>
           </div>
           <div className="grid grid-cols-2 gap-8">
-            <div>
+            <div className="bg-white rounded-lg shadow p-5 text-left">
               <h3 className="font-semibold mb-2">Recognized Faces</h3>
-              <div className="flex space-x-2">
+              <div className="flex flex-wrap gap-2 max-w-full">
                 {[1, 2, 3].map(i => (
-                  <div key={i} className="w-12 h-12 bg-gray-200 rounded-full"></div>
+                  <div key={i} className="w-12 h-12 bg-gray-200 rounded-full flex-shrink-0"></div>
                 ))}
               </div>
               <button className="text-blue-500 mt-2">View All</button>
             </div>
-            <div>
+            <div className="bg-white rounded-lg shadow p-5 text-left">
               <h3 className="font-semibold mb-2">New Faces</h3>
-              <div className="flex space-x-2">
+              <div className="flex flex-wrap gap-2 max-w-full">
                 {[1, 2].map(i => (
-                  <div key={i} className="w-12 h-12 bg-gray-200 rounded-full"></div>
+                  <div key={i} className="w-12 h-12 bg-gray-200 rounded-full flex-shrink-0"></div>
                 ))}
               </div>
               <button className="text-blue-500 mt-2">Add to Database</button>
