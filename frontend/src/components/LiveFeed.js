@@ -53,9 +53,15 @@ const LiveFeed = () => {
           <Link to="/guests">
             <SidebarLink icon={<FaUsers />} text="Guests" />
           </Link>
-          <SidebarLink icon={<FaCamera />} text="Recordings" />
-          <SidebarLink icon={<FaCog />} text="Account Settings" />
-          <SidebarLink icon={<FaCog />} text="System Settings" />
+          <Link to="/recordings">
+            <SidebarLink icon={<FaCamera />} text="Recordings" />
+          </Link>
+          <Link to="/account-settings">
+            <SidebarLink icon={<FaCog />} text="Account Settings" />
+          </Link>
+          <Link to="/system-settings">
+            <SidebarLink icon={<FaCog />} text="System Settings" />
+          </Link>
         </nav>
         <div className="absolute bottom-0 w-64 border-t">
           <SidebarLink icon={<FaSignOutAlt />} text="Logout" />

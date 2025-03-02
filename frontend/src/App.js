@@ -6,6 +6,7 @@ import SecurityPanel from './components/SecurityPanel';
 import DetectionData from './components/DetectionData';
 import LiveFeed from './components/LiveFeed';
 import Guests from './components/Guests';
+import Recordings from './components/Recordings';
 
 import Home from './components/home';
 import Live from './components/live';
@@ -28,6 +29,7 @@ function App() {
           <Route path="/detection-data" element={<DetectionData />} />
           <Route path="/live-feed" element={<LiveFeed />} />
           <Route path="/guests" element={<Guests />} />
+          <Route path="/recordings" element={<Recordings />} />
         </Routes>
       </div>
     </Router>
