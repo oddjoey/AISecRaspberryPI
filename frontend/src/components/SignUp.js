@@ -33,7 +33,7 @@ const SignUp = () => {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
-            <div>
+            <div className="text-left">
               <label className="block text-sm text-gray-600 mb-1">First Name</label>
               <input
                 type="text"
@@ -43,7 +43,7 @@ const SignUp = () => {
                 onChange={(e) => setFormData({...formData, firstName: e.target.value})}
               />
             </div>
-            <div>
+            <div className="text-left">
               <label className="block text-sm text-gray-600 mb-1">Last Name</label>
               <input
                 type="text"
@@ -55,7 +55,7 @@ const SignUp = () => {
             </div>
           </div>
 
-          <div>
+          <div className="text-left">
             <label className="block text-sm text-gray-600 mb-1">Email</label>
             <input
               type="email"
@@ -66,7 +66,7 @@ const SignUp = () => {
             />
           </div>
 
-          <div>
+          <div className="text-left">
             <label className="block text-sm text-gray-600 mb-1">Password</label>
             <div className="relative">
               <input
@@ -86,7 +86,7 @@ const SignUp = () => {
             </div>
           </div>
 
-          <div>
+          <div className="text-left">
             <label className="block text-sm text-gray-600 mb-1">Confirm Password</label>
             <div className="relative">
               <input

@@ -10,6 +10,7 @@ import Recordings from './components/Recordings';
 import AccountSettings from './components/AccountSettings';
 import SystemSettings from './components/SystemSettings';
 import SignUp from './components/SignUp';
+import Login from './components/Login';
 
 import Home from './components/home';
 import Live from './components/live';
@@ -36,6 +37,7 @@ function App() {
           <Route path="/account-settings" element={<AccountSettings />} />
           <Route path="/system-settings" element={<SystemSettings />} />
           <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </div>
     </Router>
