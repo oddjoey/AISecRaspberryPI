@@ -10,10 +10,34 @@ const Login = () => {
     rememberMe: false
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission
-  };
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const response = await fetch('http://localhost:5000/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: formData.email,
+        password: formData.password,
+      }),
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      localStorage.setItem('token', data.token);
+      if (formData.rememberMe) {
+        localStorage.setItem('rememberMe', 'true');
+      }
+    } else {
+      alert(data.message);
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert('An error occurred during login');
+  }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-white py-12 px-4">
