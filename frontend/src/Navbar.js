@@ -11,7 +11,7 @@ const Navbar = () => {
       <div className="navbar-left">
         <Link to="/" className="logo">
           <FaShieldAlt className="logo-icon" />
-          SafeGuard
+          SecureGuard
         </Link>
       </div>
       <div className="navbar-center">
