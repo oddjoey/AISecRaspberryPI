@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaRegUser, FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaRegUser, FaEye, FaEyeSlash } from 'react-icons/fa'; /*firebase db setup */
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
