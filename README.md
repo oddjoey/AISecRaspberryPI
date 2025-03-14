@@ -1,3 +1,20 @@
-# AISecRaspberryPI
-https://datasheets.raspberrypi.com/camera/picamera2-manual.pdf
-https://community.hailo.ai/t/a-comprehensive-guide-to-building-a-face-recognition-system/8803
+
+# Secure Guard
+
+Desc
+
+## Features
+
+- 1
+- 2
+- 3
+- 4
+
+
+## Running The Backend
+
+```bash
+  cd secureguard
+  npm run dev
+```
+    
