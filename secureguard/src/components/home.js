@@ -87,7 +87,7 @@ const Home = () => {
             Get a Free Quote
           </button>
           <button className="border border-black text-black px-6 py-3 rounded-md hover:bg-gray-100 transition duration-300">
-            Contact Sales
+            Contact Us
           </button>
         </div>
       </div>
