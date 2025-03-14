@@ -1,7 +1,16 @@
+'use client';
+
 import React from 'react';
 import { FaLock, FaMobile, FaBell, FaVideo, FaFingerprint, FaRobot, FaDoorClosed, FaFacebook, FaTwitter, FaLinkedin, FaInstagram } from 'react-icons/fa';
+import { useRouter } from 'next/navigation';
 
 const Home = () => {
+  const router = useRouter();
+
+  const handleGetStarted = () => {
+    router.push('/sign-up');
+  };
+
   return (
     <div className="min-h-screen bg-white">
       {/* Home Section */}
@@ -11,7 +20,9 @@ const Home = () => {
           SecureGuard offers state-of-the-art protection for homes and businesses. Experience
           unparalleled safety with our innovative security solutions.
         </p>
-        <button className="bg-black text-white px-6 py-3 rounded-md hover:bg-gray-800 transition duration-300">
+        <button className="bg-black text-white px-6 py-3 rounded-md hover:bg-gray-800 transition duration-300"
+        onClick={handleGetStarted}
+        >
           Get Started
         </button>
       </div>
