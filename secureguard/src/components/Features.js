@@ -1,9 +1,12 @@
 // src/components/Live.js
 import React from 'react';
 import { FaFacebook, FaTwitter, FaLinkedin, FaInstagram } from 'react-icons/fa';
+import Navbar from './Navbar';
 
 const Features = () => {
   return (
+    <>
+    <Navbar/>
     <div className="features-page">
       <h1>List of Features</h1>
       {/* Add your live page content */}
@@ -46,6 +49,7 @@ const Features = () => {
                           </div>
                         </footer>
     </div>
+    </>
   );
 };
 

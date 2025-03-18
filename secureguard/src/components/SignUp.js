@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 import { FaRegUser, FaEye, FaEyeSlash } from 'react-icons/fa'; /*firebase db setup */
 
-import { auth, db } from "../javascript/firebase.js"
+import { auth, db } from "../backend/firebase.js"
 import { createUserWithEmailAndPassword } from "firebase/auth"
 import { collection, doc, setDoc } from "firebase/firestore";
 

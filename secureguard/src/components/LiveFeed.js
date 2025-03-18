@@ -4,12 +4,12 @@ import Link from 'next/link'
 import { FaHome, FaVideo, FaUsers, FaCog, FaSignOutAlt, FaQuestionCircle, FaCamera, FaBars, FaSearch, FaExclamationTriangle, FaUserSecret, FaTruck } from 'react-icons/fa';
 import { MdSecurity } from 'react-icons/md';
 import { BiCctv } from 'react-icons/bi';
+import VideoStream from './VideoStream';
 
 const LiveFeed = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const cameraFeeds = [
-    { id: 1, name: 'Front Entrance', location: 'Camera Feed 1' },
     { id: 2, name: 'Parking Lot', location: 'Camera Feed 2' },
     { id: 3, name: 'Warehouse', location: 'Camera Feed 3' },
     { id: 4, name: 'Loading Dock', location: 'Camera Feed 4' },
@@ -76,6 +76,12 @@ const LiveFeed = () => {
 
         {/* Camera Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div key="" className="bg-white rounded-lg shadow-md p-4">
+            <div className="bg-gray-200 overflow-hidden h-48 md:h-64 rounded-lg flex items-center justify-center mb-2">
+              <VideoStream/>
+            </div>
+            <div className="text-gray-700">Camera 1</div>
+          </div>
           {cameraFeeds.map(camera => (
             <div key={camera.id} className="bg-white rounded-lg shadow-md p-4">
               <div className="bg-gray-200 h-48 md:h-64 rounded-lg flex items-center justify-center mb-2">

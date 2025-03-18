@@ -1,8 +1,11 @@
 import React from 'react';
 import { FaFacebook, FaTwitter, FaLinkedin, FaInstagram } from 'react-icons/fa';
+import Navbar from './Navbar';
 
 const Contact = () => {
   return (
+    <>
+    <Navbar/>
     <div className="contact-page">
       <h1>Contact</h1>
       <footer className="bg-white py-12 border-t">
@@ -43,6 +46,7 @@ const Contact = () => {
                     </div>
                   </footer>
     </div>
+    </>
   );
 };
 

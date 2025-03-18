@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { Link } from "next/link";
+import Link from "next/link";
 import { FaHome, FaVideo, FaUsers, FaCamera, FaCog, FaSignOutAlt, FaQuestionCircle, FaBars, FaPlus } from 'react-icons/fa';
 import { MdSecurity } from 'react-icons/md';
 import { BiCctv } from 'react-icons/bi';

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { FaHome, FaVideo, FaUsers, FaCog, FaSignOutAlt, FaQuestionCircle, FaCamera,FaBars, FaDoorClosed, FaExclamationTriangle, FaRadiationAlt, FaFire, FaTint, FaGasPump, FaBuilding} from 'react-icons/fa';
 import { MdSecurity } from 'react-icons/md';
 import { BiCctv } from 'react-icons/bi';
+import SidebarLink from './SidebarLink';
 
 const SecurityPanel = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -151,18 +152,6 @@ const SecurityPanel = () => {
     </div>
   );
 };
-
-const SidebarLink = ({ icon, text, active }) => (
-  <a
-    href="#"
-    className={`flex items-center space-x-2 px-4 py-3 hover:bg-gray-100 ${
-      active ? 'bg-gray-100' : ''
-    }`}
-  >
-    {icon}
-    <span>{text}</span>
-  </a>
-);
 
 const Toggle = () => (
   <div className="relative inline-block w-12 h-6 rounded-full bg-gray-200">

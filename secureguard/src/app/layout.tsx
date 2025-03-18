@@ -1,15 +1,17 @@
 import Navbar from "@/components/Navbar";
 import "./globals.css";
 import "../CSS/App.css"
+import { AuthProvider } from "@/components/AuthProvider";
 
-export default function DashboardLayout({children}:{children:React.ReactNode}){
+export default function Layout({ children } : { children:React.ReactNode }){
   return (
     <html lang="en">
       <body>
-        <div className="App">
-          <Navbar/>
-          <main>{children}</main>
-        </div>
+        <AuthProvider>
+          <div className="App">
+            <main>{children}</main>
+          </div>
+        </AuthProvider>
       </body>
     </html>
   )

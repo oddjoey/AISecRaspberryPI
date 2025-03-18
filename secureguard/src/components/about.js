@@ -1,8 +1,11 @@
 import React from "react";
 import { FaFacebook, FaTwitter, FaLinkedin, FaInstagram } from 'react-icons/fa';
+import Navbar from "./Navbar";
 
 const About = () => {
     return (
+      <>
+        <Navbar/>
         <div className="about-page bg-gray-50">
             {/* about section*/}
             <div className="text-left py-40 px-4">
@@ -92,6 +95,7 @@ const About = () => {
 
 
         </div>
+      </>
     );
 };
 

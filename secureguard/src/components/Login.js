@@ -1,13 +1,19 @@
 "use client";
-import React, { useState } from 'react';
+
+import React, { useState, useContext } from 'react';
 
 import Link from 'next/link'
 import { useRouter } from "next/navigation";
 
 import { FaShieldAlt, FaEye, FaEyeSlash } from 'react-icons/fa';
 
-import { auth, db } from "../javascript/firebase.js"
+import { auth, db } from "../backend/firebase.js"
 import { signInWithEmailAndPassword } from "firebase/auth"
+import { createSession } from "../backend/sessions.ts"
+
+import Cookies from 'js-cookie';
+
+import { AuthContext } from './AuthProvider.tsx';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -18,6 +24,7 @@ const Login = () => {
   });
   const [error, setError] = useState("");
   const router = useRouter();
+  const { userID, setUserID } = useContext(AuthContext);
 
 const handleSubmit = async (e) => {
   e.preventDefault();
@@ -33,9 +40,21 @@ const handleSubmit = async (e) => {
 
     const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
 
+    const userID = await userCredential.user.getIdToken();
+
+    //await createSession(userID);
+
+    setUserID(userID);
+
+    if (formData.rememberMe) {
+      Cookies.set("userID", userID, { expires: 7 });
+    }
+
     router.push("/");
+
   } catch (error) {
     setError(error.message);
+
     if (error.message == "Firebase: Error (auth/invalid-credential).") {
       setError("Invalid Email/Password!");
     }
