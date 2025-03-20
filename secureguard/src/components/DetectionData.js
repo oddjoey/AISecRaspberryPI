@@ -33,7 +33,9 @@ const DetectionData = () => {
           <Link href="/security-panel">
             <SidebarLink icon={<MdSecurity />} text="Security Panel" />
           </Link>
-          <SidebarLink icon={<BiCctv />} text="Detection Data" active />
+          <Link href="/detection-data">
+            <SidebarLink icon={<BiCctv />} text="Detection Data" active />
+          </Link>
           <Link href="/live-feed">
             <SidebarLink icon={<FaVideo />} text="Live Feed" />
           </Link>
@@ -49,11 +51,14 @@ const DetectionData = () => {
           <Link href="/system-settings">
             <SidebarLink icon={<FaCog />} text="System Settings" />
           </Link>
-          
         </nav>
         <div className="absolute bottom-0 w-64 border-t">
-          <SidebarLink icon={<FaSignOutAlt />} text="Logout" />
-          <SidebarLink icon={<FaQuestionCircle />} text="Help" />
+          <Link href="/log-out">
+            <SidebarLink icon={<FaSignOutAlt />} text="Logout" />
+          </Link>
+          <Link href="/help">
+            <SidebarLink icon={<FaQuestionCircle />} text="Help" />
+          </Link>
         </div>
       </div>
 
