@@ -15,7 +15,7 @@ Desc
 
 ```bash
   cd secureguard
-  npm install next@latest react@latest react-dom@latest react-icons firebase firebase-admin ws js-cookie
+  npm install next@latest react@latest react-dom@latest react-icons firebase firebase-admin ws
   npm run dev
 ```
 

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { FaHome, FaExclamationTriangle, FaVideo, FaUsers, FaCog, FaSignOutAlt, FaQuestionCircle, FaUserPlus, FaUserMinus, FaCheck, FaBan, FaCamera, FaBars } from 'react-icons/fa';
 import { MdSecurity } from 'react-icons/md';
 import { BiCctv } from 'react-icons/bi';
+import SidebarLink from './SidebarLink';
 
 const DetectionData = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -172,18 +173,6 @@ const DetectionData = () => {
     </div>
   );
 };
-
-const SidebarLink = ({ icon, text, active }) => (
-  <a
-    href="#"
-    className={`flex items-center space-x-2 px-4 py-3 hover:bg-gray-100 ${
-      active ? 'bg-gray-100' : ''
-    }`}
-  >
-    {icon}
-    <span>{text}</span>
-  </a>
-);
 
 const StatCard = ({ title, value }) => (
   <div className="bg-gray-50 p-4 rounded">

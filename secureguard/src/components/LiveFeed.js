@@ -5,6 +5,7 @@ import { FaHome, FaVideo, FaUsers, FaCog, FaSignOutAlt, FaQuestionCircle, FaCame
 import { MdSecurity } from 'react-icons/md';
 import { BiCctv } from 'react-icons/bi';
 import VideoStream from './VideoStream';
+import SidebarLink from './SidebarLink';
 
 const LiveFeed = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -142,18 +143,6 @@ const LiveFeed = () => {
     </div>
   );
 };
-
-const SidebarLink = ({ icon, text, active }) => (
-  <a
-    href="#"
-    className={`flex items-center space-x-2 px-4 py-3 hover:bg-gray-100 ${
-      active ? 'bg-gray-100' : ''
-    }`}
-  >
-    {icon}
-    <span>{text}</span>
-  </a>
-);
 
 const AlertItem = ({ icon, title, time }) => (
   <div className="flex items-center space-x-3">

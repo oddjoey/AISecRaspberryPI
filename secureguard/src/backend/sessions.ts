@@ -10,7 +10,7 @@ export async function createSession(token: string)
 
     cookieStore.set('authToken', token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    secure: true,
     sameSite: 'strict',
     path: '/',
     maxAge: 60 * 60 * 24 * 7 // 7 days
@@ -21,7 +21,7 @@ export async function getSession()
 {
     const cookie = (await cookies()).get('authToken')?.value
 
-    return { isAuth: cookie != null, authToken: cookie }
+    return cookie;
 }
 
 export async function deleteSession()

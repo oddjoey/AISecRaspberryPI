@@ -7,11 +7,9 @@ import { useRouter } from "next/navigation";
 
 import { FaShieldAlt, FaEye, FaEyeSlash } from 'react-icons/fa';
 
-import { auth, db } from "../backend/firebase.js"
+import { auth } from "../backend/firebase.js"
 import { signInWithEmailAndPassword } from "firebase/auth"
 import { createSession } from "../backend/sessions.ts"
-
-import Cookies from 'js-cookie';
 
 import { AuthContext } from './AuthProvider.tsx';
 
@@ -42,12 +40,10 @@ const handleSubmit = async (e) => {
 
     const userID = await userCredential.user.getIdToken();
 
-    //await createSession(userID);
-
     setUserID(userID);
 
     if (formData.rememberMe) {
-      Cookies.set("userID", userID, { expires: 7 });
+      await createSession(userID);
     }
 
     router.push("/");
