@@ -22,8 +22,8 @@ export const AuthProvider = ( { children } : { children:React.ReactNode } ) => {
     }, []);
 
     return (
-        <AuthContext value={{userID, setUserID}}>
+        <AuthContext.Provider value={{userID, setUserID}}>
             {children}
-        </AuthContext>
+        </AuthContext.Provider>
     );
 }
