@@ -6,11 +6,9 @@
     <title>Upload Image and Text</title>
 </head>
 <body>
-    <h1>Upload Image and Text</h1>
+    <h1>Gender test</h1>
 
-    <!-- Form for uploading text and images -->
-    <form method="POST" enctype="multipart/form-data">
-        <label for="text_input">Enter some text:</label>
+    <form method="distinguish" enctype="data input">
         <input type="text" name="text_input" id="text_input" required>
         <br><br>
 
@@ -26,8 +24,8 @@
     {% endif %}
 
     {% if image_filename %}
-    <h2>Uploaded Image:</h2>
-    <img src="{{ url_for('static', filename='uploads/' + image_filename) }}" alt="Uploaded Image" style="max-width: 500px;">
+    <h2>Test restart:</h2>
+    <img src="{{ url_for('static', filename='uploads/' + image_filename) }}" alt="Test restart" style="max-width: 500px;">
     {% endif %}
 </body>
 </html>
