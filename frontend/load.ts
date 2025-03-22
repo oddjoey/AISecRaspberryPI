@@ -2,37 +2,29 @@ import * as blazeface from '@tensorflow-models/blazeface';
 import * as tf from '@tensorflow/tfjs';
 
 let faceModel: blazeface.BlazeFaceModel;
-let genderModel: tf.LayersModel;
+let genderModel: tf.LayersModel;// grt from outside resource
 
-// Fix: Non-null assertion (`!`) and type casting
 let video = document.getElementById("webcam")! as HTMLVideoElement;
-let canvas = document.getElementById("canvas")! as HTMLCanvasElement;
 let ctx = canvas.getContext("2d")!;
 
-// Load models
 async function loadModels() {
     console.log("Loading models...");
     faceModel = await blazeface.load();
 
-    // Load custom gender classifier model
     genderModel = await tf.loadLayersModel('https://raw.githubusercontent.com/Tony607/Real_time_Gender_Recognition/master/model.json');
 
     console.log("Models loaded.");
 }
 
-// Start live video
-async function startVideo() {
+function Videore() {
     const stream = await navigator.mediaDevices.getUserMedia({ video: true });
     video.srcObject = stream;
 
     video.addEventListener('loadeddata', predictLive);
 }
 
-// Predict gender on live video
-async function predictLive() {
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-
+function information() {
+ 
     const predictions = await faceModel.estimateFaces(video, false);
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
@@ -43,11 +35,9 @@ async function predictLive() {
             const width = Math.floor(pred.bottomRight[0] - x);
             const height = Math.floor(pred.bottomRight[1] - y);
 
-            ctx.strokeStyle = "#00FF00";
+            ctx.strokeStyle = "#00FF03";
             ctx.lineWidth = 2;
             ctx.strokeRect(x, y, width, height);
-
-            // Crop face tensor and normalize
             const face = tf.browser.fromPixels(video)
                 .slice([y, x, 0], [height, width, 3])
                 .resizeNearestNeighbor([64, 64])
