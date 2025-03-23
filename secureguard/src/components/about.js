@@ -1,6 +1,7 @@
 import React from "react";
 import { FaFacebook, FaTwitter, FaLinkedin, FaInstagram } from 'react-icons/fa';
 import Navbar from "./Navbar";
+/*Tailwind implementation */
 
 const About = () => {
     return (
