@@ -8,19 +8,23 @@ const About = () => {
       <>
         <Navbar/>
         <div className="about-page bg-gray-50">
-            {/* about section*/}
-            <div className="text-left py-40 px-4">
-                <h1 className="text-4xl font-bold mb-4">We're SecureGuard</h1>
-                <p className="text-gray-600 max-w-2x1 mx-auto mb-8">
-                    With SecureGuard, we belive that security should never be 
-                    a barrier to staying connected with what matters most. Our 
-                    mission is to empower you to protect and stay close to the
-                    people, places, and things that are important to you. As a
-                    company, we are dedicated to providing innovative solutions
-                    that help you maintain peace of mind and ensure that distance
-                    is never an obstacle in your security and connection.
-                </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 py-40 px-4 gap-16">
+                <div>
+                    <h1 className="text-4xl font-bold mb-4">We're SecureGuard</h1>
+                    <p className="text-gray-600 mb-8">
+                        With SecureGuard, we believe that security should never be a barrier to
+                        staying connected with what matters most. Our mission is to empower you
+                        to protect and stay close to the people, places, and things that are
+                        important to you. As a company, we are dedicated to providing
+                        innovative solutions that help you maintain peace of mind and ensure that
+                        distance is never an obstacle in your security and connection.
+                    </p>
+                </div>
+                <div>
+                    <img className="h-auto max-w-xxlg" src="/photo1.jpg" alt="security world" />
+                </div>
             </div>
+
 
             <div className="text-right py-16 bg-white">
                 <h2 className="text-3x1 font-bold mb-4">Our Story</h2>
