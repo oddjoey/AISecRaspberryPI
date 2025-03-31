@@ -31,3 +31,8 @@ Guides/Info of frameworks/libraries used in our project
 
 [TailwindCSS](https://tailwindcss.com/docs/styling-with-utility-classes)
 
+[Hailo TAPPAS - Optimized Execution of Video-Processing Pipelines](https://github.com/hailo-ai/tappas?tab=readme-ov-file)
+
+[Hailo Raspberry Pi 5 Examples](https://github.com/hailo-ai/hailo-rpi5-examples)
+
+[Hailo Applications Infrastructure](https://github.com/hailo-ai/hailo-apps-infra)
