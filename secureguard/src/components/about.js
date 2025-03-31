@@ -8,10 +8,10 @@ const About = () => {
       <>
         <Navbar/>
         <div className="about-page bg-gray-50">
-            <div className="grid grid-cols-1 md:grid-cols-2 py-40 px-4 gap-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 py-50 px-4 gap-16">
                 <div>
                     <h1 className="text-4xl font-bold mb-4">We're SecureGuard</h1>
-                    <p className="text-gray-600 mb-8">
+                    <p className="text-xl text-gray-600 mb-8">
                         With SecureGuard, we believe that security should never be a barrier to
                         staying connected with what matters most. Our mission is to empower you
                         to protect and stay close to the people, places, and things that are
@@ -26,10 +26,10 @@ const About = () => {
             </div>
 
 
-            <div className="text-right py-16 bg-white">
-                <h2 className="text-3x1 font-bold mb-4">Our Story</h2>
-                <h3 className="text-3x1 font-bold mb-12">Innovative at Our Core</h3>
-                <p className="text-gray-600 max-w-2x1 mx-auto mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 py-40 px-4 gap-16 bg-white">
+                <h2 className="text-4x1 font-bold mb-4 ">Our Story</h2>
+                <div>
+                <p className="text-xl text-gray-600 max-w-x1 mx-auto mb-8">
                     We embarked on this journey when we envisioned a more secure home system.
                     What if your home could recognize who belongs and who doesn't? This idea 
                     sparked countless hours of development and testing, culminating in our 
@@ -42,11 +42,17 @@ const About = () => {
                     connected to what matters most.
                 </p>
             </div>
+            <div>
+              <img className="h-auto max-w-xlg" src="/photo2.jpg"></img>
+            </div>
+            </div>
 
             <div className="text-left py-16 bg-gray-50">
-                <h4 className="text-3x1 font-bold mb-4">Our Commitment</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 py-50 px-4 gap-16">
+                <div>
+                <h4 className="text-4x1 font-bold mb-4">Our Commitment</h4>
                 <h5 className="text-3x1 font-bold mb-12">Fostering Connected Communities</h5>
-                <p className="text-gray-600 max-w-2x1 mx-auto mb-8">
+                <p className="text-xl text-gray-600 mb-8">
                     At SecureGuard, our mission extends beyond safeguarding your home and business;
                     it's about strengthening the bonds within your community. We believe that engaged
                     communities are resilient communities, and we are dedicated to connecting
@@ -57,6 +63,11 @@ const About = () => {
                     security and foster a sense of unity. At SecureGuard, we're committed to
                     helping you stay connected to what matters most.
                 </p>
+                </div>
+                <div>
+                  <img className="h-auto max-w-xlg" src="/photo3.jpg"></img>
+                </div>
+                </div>
             </div>
             
             {/* Footer */}
