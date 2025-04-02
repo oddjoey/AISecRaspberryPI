@@ -7,7 +7,7 @@ const Contact = () => {
     <>
       <Navbar/>
       <div className="flex flex-col min-h-screen">
-        <div className="flex-grow flex items-center justify-center bg-white py-12 px-4">
+        <div className="flex-grow flex items-center justify-center bg-white py-12 px-4 mt-16">
           <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8">
             <div className="text-center mb-8">
               <div className="flex justify-center mb-4">
