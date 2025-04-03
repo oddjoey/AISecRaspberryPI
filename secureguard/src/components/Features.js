@@ -9,6 +9,9 @@ const Features = () => {
     <Navbar/>
     <div className="features-page">
       <h1>List of Features</h1>
+      <h2>Cam Recordings</h2>
+      <h3>24/7 Access</h3>
+      <h4>Security For You and Your Family</h4>
       {/* Add your live page content */}
 
       <footer className="bg-white py-12 border-t">
