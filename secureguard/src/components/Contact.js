@@ -1,8 +1,10 @@
 import React from 'react';
 import { FaFacebook, FaTwitter, FaLinkedin, FaInstagram, FaEnvelope } from 'react-icons/fa';
 import Navbar from './Navbar';
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
+  /* Adding backend functionality for contact button */
   return (
     <>
       <Navbar/>
