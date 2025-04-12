@@ -1,10 +1,36 @@
-import React from 'react';
+"use client";
+
+import React, { useRef } from 'react';
 import { FaFacebook, FaTwitter, FaLinkedin, FaInstagram, FaEnvelope } from 'react-icons/fa';
 import Navbar from './Navbar';
 import emailjs from '@emailjs/browser';
 
 const Contact = () => {
-  /* Adding backend functionality for contact button */
+  const form = useRef();
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs
+    .sendForm(
+      'service_0fniceq',
+      'template_ts3efnx',
+      form.current,
+      'tZxs3hqSmxaBJHjFi'
+    )
+    .then(
+      (result) => {
+        console.log(result.text);
+        alert("Message sent successfully!");
+        form.current.reset();
+      },
+      (error) => {
+        console.log(error.text);
+        alert('Failed to send message. Please try again.');
+      }
+    );
+  };
+
   return (
     <>
       <Navbar/>
@@ -21,14 +47,16 @@ const Contact = () => {
               <p className="mt-2 text-sm text-gray-600">We'd love to hear from you</p>
             </div>
 
-            <form className="space-y-4">
+            <form ref={form} onSubmit={sendEmail} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="text-left">
                   <label className="block text-sm text-gray-600 mb-1">First Name</label>
                   <input
                     type="text"
+                    name="first_name"
                     placeholder="First"
                     className="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:border-gray-400"
+                    required
                   />
                 </div>
 
@@ -36,8 +64,10 @@ const Contact = () => {
                   <label className="block text-sm text-gray-600 mb-1">Last Name</label>
                   <input
                     type="text"
+                    name="last_name"
                     placeholder="Last"
                     className="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:border-gray-400"
+                    required
                   />
                 </div>
               </div>
@@ -46,8 +76,10 @@ const Contact = () => {
                 <label className="block text-sm text-gray-600 mb-1">Email</label>
                 <input
                   type="email"
+                  name="user_email"
                   placeholder="name@example.com"
                   className="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:border-gray-400"
+                  required
                 />
               </div>
 
@@ -55,17 +87,21 @@ const Contact = () => {
                 <label className="block text-sm text-gray-600 mb-1">Subject</label>
                 <input
                   type="text"
+                  name="subject"
                   placeholder="How can we help?"
                   className="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:border-gray-400"
+                  required
                 />
               </div>
 
               <div className="text-left">
                 <label className="block text-sm text-gray-600 mb-1">Message</label>
                 <textarea
+                  name="message"
                   placeholder="Your message here..."
                   rows="4"
                   className="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:border-gray-400"
+                  required
                 ></textarea>
               </div>
 
