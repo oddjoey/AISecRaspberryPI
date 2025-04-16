@@ -24,10 +24,13 @@ export async function getSession()
     return cookie;
 }
 
+
 export async function deleteSession()
 {
     const cookieStore = await cookies();
     cookieStore.delete('authToken');
+
+    console.log("deleted!!!");
 
     await signOut(auth);
 }

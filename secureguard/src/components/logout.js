@@ -5,17 +5,20 @@ import router from "next/router";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect } from 'react';
 import { AuthContext } from "@/components/AuthProvider"
+import { getSession, deleteSession } from "@/backend/sessions";
 
 const Logout = () => {
     const route = useRouter();
-    const { setUserID } = useContext(AuthContext);
+    const { userID, setUserID } = useContext(AuthContext);
+
+    const del_session = async () => {
+        await deleteSession();
+    };
 
     useEffect(() => {
-        if (Cookies.get("userID")) {
-            Cookies.remove("userID");
-            setUserID(null);
-            route.push("/");
-        }
+        del_session();
+        setUserID(null);
+        route.push("/");
     }, [router]);
 
     return (
