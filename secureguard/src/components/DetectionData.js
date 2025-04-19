@@ -1,13 +1,182 @@
 "use client";
 import React, { useState } from 'react';
 import Link from 'next/link'
-import { FaHome, FaExclamationTriangle, FaVideo, FaUsers, FaCog, FaSignOutAlt, FaQuestionCircle, FaUserPlus, FaUserMinus, FaCheck, FaBan, FaCamera, FaBars } from 'react-icons/fa';
+import { FaHome, FaVideo, FaUsers, FaCog, FaSignOutAlt, FaQuestionCircle, FaUserPlus, FaUserMinus, FaCheck, FaBan, FaCamera, FaBars, FaTimes } from 'react-icons/fa';
 import { MdSecurity } from 'react-icons/md';
 import { BiCctv } from 'react-icons/bi';
 import SidebarLink from './SidebarLink';
 
 const DetectionData = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [selectedFace, setSelectedFace] = useState(null);
+  const [showFaceProfile, setShowFaceProfile] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedFace, setEditedFace] = useState(null);
+  const [showNewFaceModal, setShowNewFaceModal] = useState(false);
+  const [selectedNewFace, setSelectedNewFace] = useState(null);
+  const [showAddGuestModal, setShowAddGuestModal] = useState(false);
+  const [newGuest, setNewGuest] = useState({
+    name: '',
+    relation: '',
+    accessLevel: 'Limited'
+  });
+  const [showRemoveGuestModal, setShowRemoveGuestModal] = useState(false);
+  const [selectedFaceToRemove, setSelectedFaceToRemove] = useState(null);
+  const [showViewAllModal, setShowViewAllModal] = useState(false);
+  const [viewAllType, setViewAllType] = useState('recognized');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Sample face data - this would come from an API if we need to test more
+  const [recognizedFaces, setRecognizedFaces] = useState([
+    { id: 1, name: 'Diddy', relation: 'Family Member', lastVisit: '2025-03-15', totalVisits: 12, alerts: 0 },
+    { id: 2, name: 'John Cena', relation: 'Friend', lastVisit: '2025-03-14', totalVisits: 5, alerts: 1 },
+    { id: 3, name: 'Trump', relation: 'Neighbor', lastVisit: '2025-03-13', totalVisits: 3, alerts: 0 },
+  ]);
+
+  const [newFaces, setNewFaces] = useState([
+    { 
+      id: 4, 
+      name: 'ID#1234567890', 
+      relation: 'Unknown', 
+      lastSeen: '2025-03-15',
+      totalVisits: 1,
+      alerts: 0
+    },
+    { 
+      id: 5, 
+      name: 'ID#1223567891', 
+      relation: 'Unknown', 
+      lastSeen: '2025-03-15',
+      totalVisits: 1,
+      alerts: 0
+    },
+  ]);
+
+  const handleFaceClick = (face) => {
+    setSelectedFace(face);
+    setEditedFace(face);
+    setShowFaceProfile(true);
+    setIsEditing(false);
+  };
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleSaveClick = () => {
+    setRecognizedFaces(recognizedFaces.map(face => 
+      face.id === editedFace.id ? editedFace : face
+    ));
+    setSelectedFace(editedFace);
+    setIsEditing(false);
+  };
+
+  const handleCancelClick = () => {
+    setEditedFace(selectedFace);
+    setIsEditing(false);
+  };
+
+  const handleInputChange = (e) => {
+    setEditedFace({
+      ...editedFace,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleNewFaceClick = (face) => {
+    setSelectedNewFace(face);
+    setShowNewFaceModal(true);
+  };
+
+  const handleAddToDatabase = () => {
+    if (selectedNewFace) {
+      const updatedFace = {
+        ...selectedNewFace,
+        lastVisit: selectedNewFace.lastSeen,
+        totalVisits: 1,
+        alerts: 0
+      };
+      setRecognizedFaces([...recognizedFaces, updatedFace]);
+      setNewFaces(newFaces.filter(face => face.id !== selectedNewFace.id));
+      setShowNewFaceModal(false);
+    }
+  };
+
+  const handleAddGuestClick = () => {
+    setShowAddGuestModal(true);
+  };
+
+  const handleRemoveGuest = (faceId) => {
+    // Remove from recognized faces
+    setRecognizedFaces(recognizedFaces.filter(face => face.id !== faceId));
+    // Remove from new faces
+    setNewFaces(newFaces.filter(face => face.id !== faceId));
+    
+    // Close modal if the removed face was selected
+    if (selectedFace?.id === faceId) {
+      setShowFaceProfile(false);
+      setSelectedFace(null);
+    }
+    if (selectedNewFace?.id === faceId) {
+      setShowNewFaceModal(false);
+      setSelectedNewFace(null);
+    }
+  };
+
+  const handleNewGuestChange = (e) => {
+    setNewGuest({
+      ...newGuest,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleAddGuestSubmit = () => {
+    const newFace = {
+      id: Date.now(), // Using timestamp as temporary ID
+      name: newGuest.name,
+      relation: newGuest.relation,
+      lastVisit: new Date().toISOString().split('T')[0],
+      totalVisits: 0,
+      alerts: 0,
+      accessLevel: newGuest.accessLevel
+    };
+    
+    setRecognizedFaces([...recognizedFaces, newFace]);
+    setShowAddGuestModal(false);
+    setNewGuest({
+      name: '',
+      relation: '',
+      accessLevel: 'Limited'
+    });
+  };
+
+  const handleRemoveGuestClick = () => {
+    setShowRemoveGuestModal(true);
+    setSelectedFaceToRemove(null);
+  };
+
+  const handleFaceSelectForRemoval = (face) => {
+    setSelectedFaceToRemove(face);
+  };
+
+  const handleConfirmRemove = () => {
+    if (selectedFaceToRemove) {
+      handleRemoveGuest(selectedFaceToRemove.id);
+      setShowRemoveGuestModal(false);
+    }
+  };
+
+  const handleViewAllClick = (type) => {
+    setViewAllType(type);
+    setSearchQuery('');
+    setShowViewAllModal(true);
+  };
+
+  const filteredFaces = viewAllType === 'recognized' 
+    ? recognizedFaces.filter(face => 
+        face.name.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : newFaces;
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -71,15 +240,21 @@ const DetectionData = () => {
         <div className="bg-white rounded-lg shadow-md p-6 mb-6">
           <h2 className="text-xl font-semibold mb-4">Face Detection</h2>
           <div className="grid grid-cols-3 gap-4 mb-4">
-            <StatCard title="Recognized Faces" value="24" />
-            <StatCard title="New Faces" value="3" />
-            <StatCard title="Total Entries" value="27" />
+            <StatCard title="Recognized Faces" value={recognizedFaces.length} />
+            <StatCard title="New Faces" value={newFaces.length} />
+            <StatCard title="Total Entries" value={recognizedFaces.length + newFaces.length} />
           </div>
           <div className="flex space-x-2 mb-6">
-            <button className="flex items-center space-x-2 bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700">
+            <button 
+              onClick={handleAddGuestClick}
+              className="flex items-center space-x-2 bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
+            >
               <FaUserPlus /> <span>Add Guest</span>
             </button>
-            <button className="flex items-center space-x-2 bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700">
+            <button 
+              onClick={handleRemoveGuestClick}
+              className="flex items-center space-x-2 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+            >
               <FaUserMinus /> <span>Remove Guest</span>
             </button>
           </div>
@@ -87,23 +262,456 @@ const DetectionData = () => {
             <div className="bg-white rounded-lg shadow p-5 text-left">
               <h3 className="font-semibold mb-2">Recognized Faces</h3>
               <div className="flex flex-wrap gap-2 max-w-full">
-                {[1, 2, 3].map(i => (
-                  <div key={i} className="w-12 h-12 bg-gray-200 rounded-full flex-shrink-0"></div>
+                {recognizedFaces.map(face => (
+                  <div 
+                    key={face.id} 
+                    className="w-12 h-12 bg-gray-200 rounded-full flex-shrink-0 cursor-pointer hover:ring-2 hover:ring-blue-500"
+                    onClick={() => handleFaceClick(face)}
+                  ></div>
                 ))}
               </div>
-              <button className="text-blue-500 mt-2">View All</button>
+              <button 
+                onClick={() => handleViewAllClick('recognized')}
+                className="text-blue-500 mt-2 hover:text-blue-600"
+              >
+                View All
+              </button>
             </div>
             <div className="bg-white rounded-lg shadow p-5 text-left">
               <h3 className="font-semibold mb-2">New Faces</h3>
               <div className="flex flex-wrap gap-2 max-w-full">
-                {[1, 2].map(i => (
-                  <div key={i} className="w-12 h-12 bg-gray-200 rounded-full flex-shrink-0"></div>
+                {newFaces.map(face => (
+                  <div 
+                    key={face.id} 
+                    className="w-12 h-12 bg-gray-200 rounded-full flex-shrink-0 cursor-pointer hover:ring-2 hover:ring-blue-500"
+                    onClick={() => handleNewFaceClick(face)}
+                  ></div>
                 ))}
               </div>
-              <button className="text-blue-500 mt-2">Add to Database</button>
+              <button 
+                onClick={() => handleViewAllClick('new')}
+                className="text-blue-500 mt-2 hover:text-blue-600"
+              >
+                View All
+              </button>
             </div>
           </div>
         </div>
+
+        {/* View All Modal */}
+        {showViewAllModal && (
+          <div className="fixed inset-0 bg-black/15 backdrop-blur-sm flex items-center justify-center z-50">
+            <div className="bg-white rounded-lg p-6 max-w-4xl w-full mx-4 shadow-xl">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-semibold">
+                  {viewAllType === 'recognized' ? 'Recognized Faces' : 'New Faces'}
+                </h2>
+                <button 
+                  onClick={() => setShowViewAllModal(false)}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  <FaTimes />
+                </button>
+              </div>
+
+              {viewAllType === 'recognized' && (
+                <div className="mb-4">
+                  <div className="relative">
+                    <input
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder="Search by name..."
+                      className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                    {searchQuery && (
+                      <span className="absolute right-3 top-2 text-gray-400 text-sm">
+                        {filteredFaces.length} results
+                      </span>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-[60vh] overflow-y-auto">
+                {filteredFaces.map(face => (
+                  <div 
+                    key={face.id}
+                    className="p-4 border rounded-lg hover:shadow-md transition-shadow"
+                  >
+                    <div className="flex items-center space-x-3 mb-4">
+                      <div className="w-16 h-16 bg-gray-200 rounded-full"></div>
+                      <div>
+                        <h3 className="font-semibold text-lg">{face.name}</h3>
+                        <p className="text-gray-600">{face.relation}</p>
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Last {viewAllType === 'recognized' ? 'Visit' : 'Seen'}</span>
+                        <span className="font-medium">{viewAllType === 'recognized' ? face.lastVisit : face.lastSeen}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Total Visits</span>
+                        <span className="font-medium">{face.totalVisits}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Alerts</span>
+                        <span className={`font-medium ${face.alerts > 0 ? 'text-red-500' : 'text-green-500'}`}>
+                          {face.alerts}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Face Profile Modal */}
+        {showFaceProfile && selectedFace && (
+          <div className="fixed inset-0 bg-black/15 backdrop-blur-sm flex items-center justify-center z-50">
+            <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4 shadow-xl">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-semibold">Face Profile</h2>
+                <button 
+                  onClick={() => setShowFaceProfile(false)}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  <FaTimes />
+                </button>
+              </div>
+              
+              <div className="flex items-center space-x-4 mb-6">
+                <div className="w-20 h-20 bg-gray-200 rounded-full"></div>
+                <div className="flex-1">
+                  {isEditing ? (
+                    <div className="space-y-2">
+                      <input
+                        type="text"
+                        name="name"
+                        value={editedFace.name}
+                        onChange={handleInputChange}
+                        className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Name"
+                      />
+                      <input
+                        type="text"
+                        name="relation"
+                        value={editedFace.relation}
+                        onChange={handleInputChange}
+                        className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Relation"
+                      />
+                    </div>
+                  ) : (
+                    <div>
+                      <h3 className="text-lg font-semibold">{selectedFace.name}</h3>
+                      <p className="text-gray-600">{selectedFace.relation}</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Last Visit</span>
+                  <span className="font-medium">{selectedFace.lastVisit}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Total Visits</span>
+                  <span className="font-medium">{selectedFace.totalVisits}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Alerts Triggered</span>
+                  <span className={`font-medium ${selectedFace.alerts > 0 ? 'text-red-500' : 'text-green-500'}`}>
+                    {selectedFace.alerts}
+                  </span>
+                </div>
+              </div>
+
+              <div className="mt-6">
+                <h3 className="font-semibold mb-2">Recent Activity</h3>
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span>Entry at Front Door</span>
+                    <span className="text-gray-500">2025-03-15 08:30 AM</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span>Exit at Back Door</span>
+                    <span className="text-gray-500">2025-03-15 09:15 AM</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-6 flex space-x-2">
+                {isEditing ? (
+                  <>
+                    <button 
+                      onClick={handleSaveClick}
+                      className="flex-1 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                    >
+                      Save Changes
+                    </button>
+                    <button 
+                      onClick={handleCancelClick}
+                      className="flex-1 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+                    >
+                      Cancel
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button 
+                      onClick={handleEditClick}
+                      className="flex-1 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+                    >
+                      Edit Profile
+                    </button>
+                    <button 
+                      onClick={() => handleRemoveGuest(selectedFace.id)}
+                      className="flex-1 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                    >
+                      Remove Guest
+                    </button>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* New Face Modal */}
+        {showNewFaceModal && selectedNewFace && (
+          <div className="fixed inset-0 bg-black/15 backdrop-blur-sm flex items-center justify-center z-50">
+            <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4 shadow-xl">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-semibold">New Face Detected</h2>
+                <button 
+                  onClick={() => setShowNewFaceModal(false)}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  <FaTimes />
+                </button>
+              </div>
+              
+              <div className="flex items-center space-x-4 mb-6">
+                <div className="w-20 h-20 bg-gray-200 rounded-full"></div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold">{selectedNewFace.name}</h3>
+                  <p className="text-gray-600">{selectedNewFace.relation}</p>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Last Seen</span>
+                  <span className="font-medium">{selectedNewFace.lastSeen}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Total Visits</span>
+                  <span className="font-medium">{selectedNewFace.totalVisits}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Alerts</span>
+                  <span className={`font-medium ${selectedNewFace.alerts > 0 ? 'text-red-500' : 'text-green-500'}`}>
+                    {selectedNewFace.alerts}
+                  </span>
+                </div>
+              </div>
+
+              <div className="mt-6">
+                <h3 className="font-semibold mb-2">Recent Activity</h3>
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span>First Detection</span>
+                    <span className="text-gray-500">{selectedNewFace.lastSeen} 08:30 AM</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-6 flex space-x-2">
+                <button 
+                  onClick={handleAddToDatabase}
+                  className="flex-1 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                >
+                  Add to Recognized Faces
+                </button>
+                <button 
+                  onClick={() => handleRemoveGuest(selectedNewFace.id)}
+                  className="flex-1 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                >
+                  Remove Guest
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Add Guest Modal */}
+        {showAddGuestModal && (
+          <div className="fixed inset-0 bg-black/15 backdrop-blur-sm flex items-center justify-center z-50">
+            <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4 shadow-xl">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-semibold">Add New Guest</h2>
+                <button 
+                  onClick={() => setShowAddGuestModal(false)}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  <FaTimes />
+                </button>
+              </div>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={newGuest.name}
+                    onChange={handleNewGuestChange}
+                    className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Enter guest name"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Relation</label>
+                  <input
+                    type="text"
+                    name="relation"
+                    value={newGuest.relation}
+                    onChange={handleNewGuestChange}
+                    className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Enter relation"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Access Level</label>
+                  <select
+                    name="accessLevel"
+                    value={newGuest.accessLevel}
+                    onChange={handleNewGuestChange}
+                    className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="Limited">Limited</option>
+                    <option value="Standard">Standard</option>
+                    <option value="Full">Full</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="mt-6 flex space-x-2">
+                <button 
+                  onClick={handleAddGuestSubmit}
+                  className="flex-1 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                >
+                  Add Guest
+                </button>
+                <button 
+                  onClick={() => setShowAddGuestModal(false)}
+                  className="flex-1 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Remove Guest Modal */}
+        {showRemoveGuestModal && (
+          <div className="fixed inset-0 bg-black/15 backdrop-blur-sm flex items-center justify-center z-50">
+            <div className="bg-white rounded-lg p-6 max-w-4xl w-full mx-4 shadow-xl">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-semibold">Select Guest to Remove</h2>
+                <button 
+                  onClick={() => setShowRemoveGuestModal(false)}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  <FaTimes />
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                {/* Recognized Faces Section */}
+                <div className="space-y-2">
+                  <h3 className="font-semibold text-lg mb-2">Recognized Faces</h3>
+                  <div className="grid grid-cols-2 gap-4">
+                    {recognizedFaces.map(face => (
+                      <div 
+                        key={face.id}
+                        onClick={() => handleFaceSelectForRemoval(face)}
+                        className={`p-4 border rounded-lg cursor-pointer transition-all ${
+                          selectedFaceToRemove?.id === face.id 
+                            ? 'border-red-500 bg-red-50' 
+                            : 'border-gray-200 hover:border-gray-300'
+                        }`}
+                      >
+                        <div className="flex items-center space-x-3">
+                          <div className="w-12 h-12 bg-gray-200 rounded-full"></div>
+                          <div>
+                            <h4 className="font-medium">{face.name}</h4>
+                            <p className="text-sm text-gray-600">{face.relation}</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* New Faces Section */}
+                <div className="space-y-2">
+                  <h3 className="font-semibold text-lg mb-2">New Faces</h3>
+                  <div className="grid grid-cols-2 gap-4">
+                    {newFaces.map(face => (
+                      <div 
+                        key={face.id}
+                        onClick={() => handleFaceSelectForRemoval(face)}
+                        className={`p-4 border rounded-lg cursor-pointer transition-all ${
+                          selectedFaceToRemove?.id === face.id 
+                            ? 'border-red-500 bg-red-50' 
+                            : 'border-gray-200 hover:border-gray-300'
+                        }`}
+                      >
+                        <div className="flex items-center space-x-3">
+                          <div className="w-12 h-12 bg-gray-200 rounded-full"></div>
+                          <div>
+                            <h4 className="font-medium">{face.name}</h4>
+                            <p className="text-sm text-gray-600">{face.relation}</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex justify-end space-x-2">
+                <button 
+                  onClick={() => setShowRemoveGuestModal(false)}
+                  className="px-4 py-2 text-gray-600 hover:text-gray-800"
+                >
+                  Cancel
+                </button>
+                <button 
+                  onClick={handleConfirmRemove}
+                  disabled={!selectedFaceToRemove}
+                  className={`px-4 py-2 rounded ${
+                    selectedFaceToRemove 
+                      ? 'bg-red-500 text-white hover:bg-red-600' 
+                      : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                  }`}
+                >
+                  Remove Selected Guest
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Vehicle Detection Section */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-6">
