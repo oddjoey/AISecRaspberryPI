@@ -1,41 +1,18 @@
-"use client";
+'use client';
 
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { FaShieldAlt, FaMoon, FaSun } from 'react-icons/fa';
 import "../CSS/Navbar.css";
+import "../CSS/darkMode.css"
 import { AuthContext } from './AuthProvider.tsx';
+import { ThemeContext } from './ThemeProvider.tsx';
 
 const Navbar = () => {
-  const { userID, setUserID } = useContext(AuthContext);
+  const { userID } = useContext(AuthContext);
+  const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
   const pathname = usePathname();
-
-  // Dark mode state
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
-  // Initialize theme on mount
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme === "dark") {
-      setIsDarkMode(true);
-      document.body.classList.add("dark");
-    }
-  }, []);
-
-  const toggleDarkMode = () => {
-    setIsDarkMode(prev => {
-      const newTheme = !prev;
-      if (newTheme) {
-        document.body.classList.add("dark");
-        localStorage.setItem("theme", "dark");
-      } else {
-        document.body.classList.remove("dark");
-        localStorage.setItem("theme", "light");
-      }
-      return newTheme;
-    });
-  };
 
   const isActive = (path) => {
     return pathname === path ? 'active' : '';

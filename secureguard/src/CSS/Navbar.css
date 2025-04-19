@@ -176,4 +176,30 @@
     }
   }
 
+.dark-mode-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: #333;
+  margin-right: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s ease;
+}
+
+.dark-mode-toggle:hover {
+  color: #000;
+}
+
+body.dark .dark-mode-toggle {
+  color: #e0e0e0;
+}
+
+body.dark .dark-mode-toggle:hover {
+  color: #ffffff;
+}
+
+
   
