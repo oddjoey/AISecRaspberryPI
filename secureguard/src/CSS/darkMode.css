@@ -4,7 +4,6 @@ body.dark {
     color: #e0e0e0;
   }
   
-  /* Navbar dark mode styles */
   body.dark .navbar {
     background-color: #1e1e1e;
     border-bottom: 1px solid #333;
@@ -35,7 +34,6 @@ body.dark {
     background-color: #444;
   }
   
-  /* Home page dark mode styles */
   body.dark .min-h-screen {
     background-color: #121212;
   }
@@ -66,7 +64,6 @@ body.dark {
     border-color: #333;
   }
   
-  /* Button styles */
   body.dark .bg-black {
     background-color: #2d2d2d;
   }
@@ -95,7 +92,6 @@ body.dark {
     color: #ffffff;
   }
   
-  /* Feature and benefit cards */
   body.dark .text-black {
     color: #e0e0e0;
   }
