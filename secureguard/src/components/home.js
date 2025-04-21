@@ -12,6 +12,14 @@ const Home = () => {
     router.push('/sign-up');
   };
 
+  const handleContactRedirect = () => {
+    router.push('/contact');
+  };
+
+  const handleLearnMore = () => {
+    router.push('/about');
+  };
+
   return (
     <>
       <Navbar/>
@@ -86,10 +94,12 @@ const Home = () => {
             Join thousands of satisfied customers who trust SecureGuard for their security needs.
           </p>
           <div className="space-x-4">
-            <button className="bg-black text-white px-6 py-3 rounded-md hover:bg-gray-800 transition duration-300">
-              Get a Free Quote
+            <button className="bg-black text-white px-6 py-3 rounded-md hover:bg-gray-800 transition duration-300"
+            onClick={handleContactRedirect}>
+              Learn More
             </button>
-            <button className="border border-black text-black px-6 py-3 rounded-md hover:bg-gray-100 transition duration-300">
+            <button className="border border-black text-black px-6 py-3 rounded-md hover:bg-gray-100 transition duration-300"
+            onClick={handleLearnMore}>
               Contact Us
             </button>
           </div>
