@@ -67,7 +67,7 @@ const Navbar = () => {
             </Link>
           </>
         ) : (
-          <Link href="/log-out" className={`login-btn ${isActive('/log-out')}`}>
+          <Link href="/log-out" className={`logout-btn ${isActive('/log-out')}`}>
             Log Out
           </Link>
         )}
