@@ -11,7 +11,7 @@ Desc
 - 4
 
 
-## Running The Backend
+## Running The Frontend
 
 ```bash
   cd secureguard
