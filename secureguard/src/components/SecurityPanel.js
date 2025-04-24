@@ -1,42 +1,84 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Link from 'next/link'
-import { FaHome, FaVideo, FaUsers, FaCog, FaSignOutAlt, FaQuestionCircle, FaCamera,FaBars, FaDoorClosed, FaExclamationTriangle, FaRadiationAlt, FaFire, FaTint, FaGasPump, FaBuilding} from 'react-icons/fa';
+import {
+  FaHome, FaVideo, FaUsers, FaCog, FaSignOutAlt, FaQuestionCircle, FaCamera, FaBars, FaDoorClosed,
+  FaExclamationTriangle, FaRadiationAlt, FaFire, FaTint, FaGasPump, FaBuilding, FaMicrophone, FaMicrophoneSlash
+} from 'react-icons/fa';
 import { MdSecurity } from 'react-icons/md';
 import { BiCctv } from 'react-icons/bi';
 import SidebarLink from './SidebarLink';
+
+const VoiceCommandButton = ({ onCommand }) => {
+  const [listening, setListening] = useState(false);
+  const recognitionRef = useRef(null);
+
+  const handleClick = () => {
+    if (!('webkitSpeechRecognition' in window)) {
+      alert("Speech recognition not supported in this browser.");
+      return;
+    }
+    if (!listening) {
+      const recognition = new window.webkitSpeechRecognition();
+      recognitionRef.current = recognition;
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.lang = 'en-US';
+
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        setListening(false);
+        if (onCommand) onCommand(transcript);
+      };
+
+      recognition.onerror = () => setListening(false);
+      recognition.onend = () => setListening(false);
+
+      recognition.start();
+      setListening(true);
+    } else {
+      recognitionRef.current?.stop();
+      setListening(false);
+    }
+  };
+
+  return (
+    <button
+      onClick={handleClick}
+      className={`p-4 rounded-full shadow-lg fixed top-6 right-6 z-40 text-white transition ${listening ? 'bg-red-500' : 'bg-blue-500'} hover:scale-110`}
+      title="Voice Command"
+    >
+      {listening ? <FaMicrophoneSlash size={22} /> : <FaMicrophone size={22} />}
+    </button>
+  );
+};
 
 const SecurityPanel = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const notifications = [
-    { icon: <FaDoorClosed className="text-blue-500" />,
-      title: "Front Door Opened",
-      time: "2025-03-15 08:30 AM" },
-    { icon: <FaExclamationTriangle className="text-yellow-500" />,
-      title: "Motion Detected - Backyard", 
-      time: "2025-03-15 02:45 AM" },
-    { icon: <FaRadiationAlt className="text-red-500" />,
-      title: "Smoke Detected - Kitchen",
-      time: "2025-03-14 07:15 PM" }
+    { icon: <FaDoorClosed className="text-blue-500" />, title: "Front Door Opened", time: "2025-03-15 08:30 AM" },
+    { icon: <FaExclamationTriangle className="text-yellow-500" />, title: "Motion Detected - Backyard", time: "2025-03-15 02:45 AM" },
+    { icon: <FaRadiationAlt className="text-red-500" />, title: "Smoke Detected - Kitchen", time: "2025-03-14 07:15 PM" }
   ];
 
   const alerts = [
-    { icon: <FaFire className="text-red-500" />,
-      title: "Fire Alert", status: "No fire detected" },
-    { icon: <FaTint className="text-blue-500" />,
-      title: "Flood Alert", status: "No flood detected" },
-    { icon: <FaGasPump className="text-yellow-500" />,
-      title: "Gas Leak Alert", status: "No gas leak detected" },
-    { icon: <FaBuilding className="text-gray-500" />,
-      title: "Earthquake Alert",
-      status: "No seismic activity detected" }
+    { icon: <FaFire className="text-red-500" />, title: "Fire Alert", status: "No fire detected" },
+    { icon: <FaTint className="text-blue-500" />, title: "Flood Alert", status: "No flood detected" },
+    { icon: <FaGasPump className="text-yellow-500" />, title: "Gas Leak Alert", status: "No gas leak detected" },
+    { icon: <FaBuilding className="text-gray-500" />, title: "Earthquake Alert", status: "No seismic activity detected" }
   ];
+
+  const handleVoiceCommand = (command) => {
+    // For now, just alert. Replace with your own actions!
+    alert(`Voice Command recognized: "${command}"`);
+    // For custom actions, add logic here based on command!
+  };
 
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Mobile menu button */}
-      <button 
+      <button
         onClick={() => setSidebarOpen(!sidebarOpen)}
         className="lg:hidden fixed top-4 left-4 z-20 p-2 rounded-md bg-gray-800 text-white"
       >
@@ -52,28 +94,14 @@ const SecurityPanel = () => {
       `}>
         <div className="p-4 font-bold text-lg border-b">AI Security System</div>
         <nav className="mt-4">
-          <Link href="/">
-            <SidebarLink icon={<FaHome />} text="Homepage" />
-          </Link>
+          <Link href="/"><SidebarLink icon={<FaHome />} text="Homepage" /></Link>
           <SidebarLink icon={<MdSecurity />} text="Security Panel" active />
-          <Link href="/detection-data">
-            <SidebarLink icon={<BiCctv />} text="Detection Data" />
-          </Link>
-          <Link href="/live-feed">
-            <SidebarLink icon={<FaVideo />} text="Live Feed" />
-          </Link>
-          <Link href="/guests">
-            <SidebarLink icon={<FaUsers />} text="Guests" />
-          </Link>
-          <Link href="/recordings">
-            <SidebarLink icon={<FaCamera />} text="Recordings" />
-          </Link>
-          <Link href="/account-settings">
-            <SidebarLink icon={<FaCog />} text="Account Settings" />
-          </Link>
-          <Link href="/system-settings">
-            <SidebarLink icon={<FaCog />} text="System Settings" />
-          </Link>
+          <Link href="/detection-data"><SidebarLink icon={<BiCctv />} text="Detection Data" /></Link>
+          <Link href="/live-feed"><SidebarLink icon={<FaVideo />} text="Live Feed" /></Link>
+          <Link href="/guests"><SidebarLink icon={<FaUsers />} text="Guests" /></Link>
+          <Link href="/recordings"><SidebarLink icon={<FaCamera />} text="Recordings" /></Link>
+          <Link href="/account-settings"><SidebarLink icon={<FaCog />} text="Account Settings" /></Link>
+          <Link href="/system-settings"><SidebarLink icon={<FaCog />} text="System Settings" /></Link>
         </nav>
         <div className="absolute bottom-0 w-64 border-t">
           <SidebarLink icon={<FaSignOutAlt />} text="Logout" />
@@ -82,7 +110,11 @@ const SecurityPanel = () => {
       </div>
 
       {/* Security Panel */}
-      <div className="flex-1 overflow-auto p-4 lg:p-8">
+      <div className="flex-1 overflow-auto p-4 lg:p-8 relative">
+
+        {/* Voice Command Button */}
+        <VoiceCommandButton onCommand={handleVoiceCommand} />
+
         <h1 className="text-2xl font-bold mb-6">Security Panel</h1>
 
         {/* System Status */}
@@ -100,7 +132,7 @@ const SecurityPanel = () => {
         <div className="bg-white rounded-lg shadow-md p-6 mb-6">
           <h2 className="text-lg font-semibold mb-4">Notifications</h2>
           {notifications.map((notification, index) => (
-            <NotificationItem 
+            <NotificationItem
               key={index}
               icon={notification.icon}
               title={notification.title}
@@ -141,7 +173,7 @@ const SecurityPanel = () => {
           <h2 className="text-lg font-semibold mb-4">Disaster Prevention</h2>
           <div className="grid grid-cols-2 gap-4">
             {alerts.map((alert, index) => (
-              <AlertItem 
+              <AlertItem
                 key={index}
                 icon={alert.icon}
                 title={alert.title}
@@ -155,6 +187,7 @@ const SecurityPanel = () => {
   );
 };
 
+// ...existing components...
 const Toggle = () => (
   <div className="relative inline-block w-12 h-6 rounded-full bg-gray-200">
     <div className="absolute right-1 top-1 w-4 h-4 rounded-full bg-white shadow"></div>
@@ -184,4 +217,4 @@ const AlertItem = ({ icon, title, status }) => (
   </div>
 );
 
-export default SecurityPanel; 
+export default SecurityPanel;
