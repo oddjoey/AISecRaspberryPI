@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link'
 import { FaHome, FaVideo, FaUsers, FaCog, FaSignOutAlt, FaQuestionCircle, FaCamera, FaBars, FaSearch, FaExclamationTriangle, FaUserSecret, FaTruck } from 'react-icons/fa';
 import { MdSecurity } from 'react-icons/md';
@@ -9,6 +9,7 @@ import SidebarLink from './SidebarLink';
 
 const LiveFeed = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [enableCamera1, setEnableCamera1] = useState(false);
 
   const cameraFeeds = [
     { id: 2, name: 'Parking Lot', location: 'Camera Feed 2' },
@@ -22,6 +23,14 @@ const LiveFeed = () => {
     { location: 'Parking Lot', time: '10:15 AM' },
     { location: 'Parking Lot', time: '10:05 AM' },
   ];
+
+  const handleToggle = (e) => {
+    setEnableCamera1(e.target.checked);
+  };
+
+  useEffect(() => {
+    // get data, update toggles...
+  }, []);
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -79,9 +88,17 @@ const LiveFeed = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div key="" className="bg-white rounded-lg shadow-md p-4">
             <div className="bg-gray-200 overflow-hidden h-48 md:h-64 rounded-lg flex items-center justify-center mb-2">
-              <VideoStream/>
+              {enableCamera1 ? <VideoStream/> : <></>}
             </div>
-            <div className="text-gray-700">Camera 1</div>
+            <div className="flex justify-center items-center space-x-4">
+              <div className="flex justify-center items-center space-x-4">
+                <span className="text-gray-700">Camera 1</span>
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" checked={enableCamera1} onChange={handleToggle} className="sr-only peer" />
+                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                </label>
+              </div>
+            </div>
           </div>
           {cameraFeeds.map(camera => (
             <div key={camera.id} className="bg-white rounded-lg shadow-md p-4">
