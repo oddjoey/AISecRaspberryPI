@@ -39,10 +39,10 @@ const VoiceCommandButton = ({ onCommand }) => {
     return (
         <button
             onClick={handleClick}
-            className={`p-3 rounded-full shadow-lg text-white transition ${listening ? 'bg-red-500' : 'bg-blue-500'} hover:scale-105`}
+            className={`p-4 rounded-full shadow-lg fixed top-6 right-6 z-40 text-white transition ${listening ? 'bg-red-500' : 'bg-blue-500'} hover:scale-110`}
             title="Voice Command"
         >
-            {listening ? <FaMicrophoneSlash /> : <FaMicrophone />}
+            {listening ? <FaMicrophoneSlash size={22} /> : <FaMicrophone size={22} />}
         </button>
     );
 };

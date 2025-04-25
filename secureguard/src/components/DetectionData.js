@@ -5,6 +5,7 @@ import { FaHome, FaVideo, FaUsers, FaCog, FaSignOutAlt, FaQuestionCircle, FaUser
 import { MdSecurity } from 'react-icons/md';
 import { BiCctv } from 'react-icons/bi';
 import SidebarLink from './SidebarLink';
+import VoiceCommandButton from './VoiceCommandButton';
 
 const DetectionData = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -172,6 +173,10 @@ const DetectionData = () => {
     setShowViewAllModal(true);
   };
 
+  const handleVoiceCommand = (command) => {
+    alert(`Voice Command recognized: "${command}"`);
+  }
+
   const filteredFaces = viewAllType === 'recognized' 
     ? recognizedFaces.filter(face => 
         face.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -234,6 +239,7 @@ const DetectionData = () => {
 
       {/* Detection Data */}
       <div className="flex-1 p-8">
+        <VoiceCommandButton onCommand={handleVoiceCommand} />
         <h1 className="text-2xl font-bold mb-6">Detection Data</h1>
 
         {/* Face Detection Section */}
