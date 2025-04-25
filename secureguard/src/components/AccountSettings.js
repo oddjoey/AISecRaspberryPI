@@ -5,6 +5,7 @@ import { FaHome, FaVideo, FaUsers, FaCamera, FaCog, FaSignOutAlt, FaQuestionCirc
 import { MdSecurity } from 'react-icons/md';
 import { BiCctv } from 'react-icons/bi';
 import SidebarLink from './SidebarLink';
+import VoiceCommandButton from './VoiceCommandButton';
 
 const AccountSettings = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -18,6 +19,10 @@ const AccountSettings = () => {
     smsNotifications: true,
     pushNotifications: false
   });
+
+  const handleVoiceCommand = (command) => {
+    alert(`Voice Command recognized: "${command}"`);
+  };
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -71,6 +76,9 @@ const AccountSettings = () => {
 
       {/* Main Content */}
       <main className="flex-1 p-8">
+
+        <VoiceCommandButton onCommand={handleVoiceCommand} />
+        
         <h1 className="text-2xl font-bold mb-2">Account Settings</h1>
         <p className="text-gray-600 mb-6">Customize your account and manage security settings</p>
 

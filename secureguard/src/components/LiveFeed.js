@@ -6,6 +6,7 @@ import { MdSecurity } from 'react-icons/md';
 import { BiCctv } from 'react-icons/bi';
 import VideoStream from './VideoStream';
 import SidebarLink from './SidebarLink';
+import VoiceCommandButton from './VoiceCommandButton';
 
 const LiveFeed = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -23,6 +24,10 @@ const LiveFeed = () => {
     { location: 'Parking Lot', time: '10:15 AM' },
     { location: 'Parking Lot', time: '10:05 AM' },
   ];
+
+  const handleVoiceCommand = (command) => {
+    alert(`Voice Command recognized: "${command}"`);
+  }
 
   const handleToggle = (e) => {
     setEnableCamera1(e.target.checked);
@@ -82,6 +87,8 @@ const LiveFeed = () => {
 
       {/* Main Content for live feed */}
       <div className="flex-1 overflow-auto p-4 lg:p-8">
+
+        <VoiceCommandButton onCommand ={handleVoiceCommand} />
         <h1 className="text-2xl font-bold mb-6">Live Feed</h1>
 
         {/* Camera Grid */}
