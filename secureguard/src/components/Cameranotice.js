@@ -1,23 +1,22 @@
 "use client";
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Cameranotice = ({ cameraState }) => {
   const [notification, setNotification] = useState('');
-  const prevCameraState = useRef('');
 
-  if (prevCameraState.current !== cameraState) {
-    prevCameraState.current = cameraState;
+  useEffect(() => {
+    let timer;
 
     if (cameraState === 'ON') {
       setNotification('AiRaspberry Securegard camera turned ON');
+      timer = setTimeout(() => setNotification(''), 3000);
     } else if (cameraState === 'OFF') {
       setNotification('AiRaspberry Securegard camera turned OFF');
+      timer = setTimeout(() => setNotification(''), 3000);
     }
 
-    setTimeout(() => {
-      setNotification('');
-    }, 3000);
-  }
+    return () => clearTimeout(timer);
+  }, [cameraState]);
 
   return (
     notification && (
