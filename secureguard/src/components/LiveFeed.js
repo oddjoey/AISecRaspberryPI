@@ -7,6 +7,7 @@ import { BiCctv } from 'react-icons/bi';
 import VideoStream from './VideoStream';
 import SidebarLink from './SidebarLink';
 import VoiceCommandButton from './VoiceCommandButton';
+import Cameranotice from './Cameranotice';
 
 const LiveFeed = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -38,6 +39,7 @@ const LiveFeed = () => {
   }, []);
 
   return (
+    <Cameranotice cameraState={enableCamera1 ? 'ON' : 'OFF'} />
     <div className="flex h-screen bg-gray-100">
       {/* Mobile menu button */}
       <button 
