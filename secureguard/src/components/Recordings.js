@@ -6,6 +6,7 @@ import { FaHome, FaVideo, FaUsers, FaCamera, FaCog, FaSignOutAlt, FaQuestionCirc
 import { MdSecurity } from 'react-icons/md';
 import { BiCctv } from 'react-icons/bi';
 import SidebarLink from './SidebarLink';
+import VoiceCommandButton from './VoiceCommandButton';
 
 const Recordings = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -26,6 +27,10 @@ const Recordings = () => {
     { date: '2025-03-09 14:30', duration: '45m' },
     { date: '2025-03-08 09:00', duration: '2h' }
   ];
+
+  const handleVoiceCommand = (command) => {
+    alert(`Voice Command recognized: "${command}"`);
+  };
 
   const handleSaveSettings = () => {
     console.log('Saving settings...');
@@ -81,6 +86,8 @@ const Recordings = () => {
 
       {/* Main Content */}
       <main className="flex-1 p-4 lg:p-8">
+
+        <VoiceCommandButton onCommand={handleVoiceCommand} />
         <h1 className="text-2xl font-bold mb-6">Recordings</h1>
 
         {/* Recording Logs */}

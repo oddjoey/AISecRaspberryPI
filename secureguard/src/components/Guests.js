@@ -5,6 +5,7 @@ import { FaHome, FaVideo, FaUsers, FaCamera, FaCog, FaSignOutAlt, FaQuestionCirc
 import { MdSecurity } from 'react-icons/md';
 import { BiCctv } from 'react-icons/bi';
 import SidebarLink from './SidebarLink';
+import VoiceCommandButton from './VoiceCommandButton';
 
 const Guests = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -15,6 +16,10 @@ const Guests = () => {
   const [expirationTime, setExpirationTime] = useState('');
   const [licensePlate, setLicensePlate] = useState('');
   const [searchProfiles, setSearchProfiles] = useState('');
+
+  const handleVoiceCommand = (command) => {
+    alert(`Voice Command recognized: "${command}"`);
+  };
 
   const handleGenerateAccessCode = () => {
     // Implementation for generating access code
@@ -76,6 +81,9 @@ const Guests = () => {
 
       {/* Main Content (your existing content) */}
       <div className="flex-1 overflow-auto p-4 lg:p-8">
+
+        <VoiceCommandButton onCommand={handleVoiceCommand} />
+        
         <h1 className="text-2xl font-bold mb-6">Guest Management</h1>
 
         {/* Temporary Access Section */}
