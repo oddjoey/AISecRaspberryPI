@@ -73,12 +73,12 @@ def pre_process_crops(cropped_faces):
     return processed_faces
 
 def draw_objects(request):
-    current_detections = detections
+    current_detections = faces_detected
     if current_detections:
         with MappedArray(request, "main") as m:
-            for class_name, bbox, score in current_detections:
+            for bbox, score in current_detections:
                 x0, y0, x1, y1 = bbox
-                label = f"{class_name} %{int(score * 100)}"
+                label = f" %{int(score * 100)}"
                 cv2.rectangle(m.array, (x0, y0), (x1, y1), (0, 255, 0, 0), 2)
                 cv2.putText(m.array, label, (x0 + 5, y0 + 15),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0, 0), 1, cv2.LINE_AA)
@@ -110,7 +110,7 @@ if __name__ == "__main__":
     picam2.start_recording(MJPEGEncoder(), SocketOutput())
     picam2.pre_callback = draw_objects
 
-    joeys_embedding = np.load("face0_attri.npy")
+    joeys_embedding = np.load("face0_emb.npy")
 
     while True:
         frame = picam2.capture_array("lores")
