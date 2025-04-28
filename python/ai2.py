@@ -37,6 +37,8 @@ VIDEO_HEIGHT = 1080
 SERVER_IP = "192.168.1.136"
 SERVER_PORT = 5005
 
+faces_detected = []
+
 class SocketOutput(Output):
     def outputframe(self, frame, keyframe=True, timestamp=None, packet=None, audio=None):
         try:
@@ -110,7 +112,7 @@ if __name__ == "__main__":
     picam2.start_recording(MJPEGEncoder(), SocketOutput())
     picam2.pre_callback = draw_objects
 
-    joeys_embedding = np.load("face0_emb.npy")
+    joeys_embedding = np.load("faces/face0_emb.npy")
 
     while True:
         frame = picam2.capture_array("lores")
