@@ -1,37 +1,30 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from 'react';
 
 export default function VideoStream() {
-    const imgRef = useRef<HTMLImageElement>(null);
+  const [imgSrc, setImgSrc] = useState('/current_frame.jpg');
+  const ws = useRef(null);
 
-    useEffect(() => {
-        const socket = new WebSocket("ws://localhost:8080");
+  useEffect(() => {
+    // Connect to WebSocket
+    const socket = new WebSocket("ws://localhost:8080"); // Replace with your server IP if not local
 
-        socket.onopen = () => console.log("Connected to WebSocket");
-        
-        socket.onmessage = async (event) => {
-            if (!imgRef.current) return;
+    socket.onmessage = (event) => {
+      if (event.data === 'new_frame') {
+        // Force reload the image with a timestamp to bypass cache
+        setImgSrc(`/current_frame.jpg?${Date.now()}`);
+      }
+    };
 
-            const blob = event.data instanceof Blob ? event.data : new Blob([event.data]); // Convert to Blob if needed
-            const reader = new FileReader();
-            
-            reader.onload = () => {
-                if (typeof reader.result === "string") {
-                    imgRef.current!.src = reader.result; // Set as image source
-                }
-            };
+    return () => {
+        socket.close();
+    };
+  }, []);
 
-            reader.readAsDataURL(blob); // Convert binary to Base64 URL
-        };
-
-        socket.onclose = () => console.log("Disconnected from WebSocket");
-
-        return () => socket.close();
-    }, []);
-
-    return (
-        <div>
-            <img ref={imgRef} alt="" className="w-full h-full"/>
-        </div>
-    );
+  return (
+    <div style={{ textAlign: 'center', marginTop: '20px' }}>
+      <h1>Live Stream</h1>
+      <img src={imgSrc} alt="Live Stream"/>
+    </div>
+  );
 }

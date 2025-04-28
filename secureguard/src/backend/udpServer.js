@@ -1,27 +1,79 @@
-const dgram = require("dgram");
-const { WebSocketServer } = require("ws");
+const net = require('net');
+const fs = require('fs');
+const path = require('path');
+const WebSocket = require('ws');
 
-const UDP_PORT = 5005;
-const UDP_HOST = "0.0.0.0";
+// Create TCP server
+const tcpServer = net.createServer((socket) => {
+  console.log('New TCP client connected');
 
-const server = dgram.createSocket("udp4");
-const wss = new WebSocketServer({ port: 8080 });
+  let buffer = Buffer.alloc(0);
 
-server.on("message", (data, rinfo) => {
-    //console.log(`Received UDP message: ${data}`);
+  socket.on('data', (data) => {
+    buffer = Buffer.concat([buffer, data]);
 
-    // Broadcast UDP data to all WebSocket clients
-    wss.clients.forEach(client => {
-        if (client.readyState === WebSocket.OPEN) {
-            client.send(data);
+    while (buffer.length >= 4) {
+      // Read 4 bytes for frame size
+      const frameSize = buffer.readUInt32BE(0);
+
+      if (buffer.length >= frameSize + 4) {
+        const frameData = buffer.slice(4, 4 + frameSize);
+
+        // Absolute path to /secureguard/public/
+        const outputDir = path.join(__dirname, '..', '..', 'public');
+        const framePath = path.join(outputDir, 'current_frame.jpg');
+
+        // Ensure the folder exists
+        fs.mkdirSync(outputDir, { recursive: true });
+
+        // Save the frame
+        fs.writeFile(framePath, frameData, (err) => {
+        if (err) {
+            console.error('Failed to save frame:', err);
+        } else {
+            console.log('Frame saved to', framePath);
+            broadcastNewFrame?.(); // optional if using WebSocket
         }
-    });
+        });
+        fs.writeFile(framePath, frameData, (err) => {
+          if (err) {
+            console.error('Failed to save frame:', err);
+          } else {
+            // After saving, notify all WebSocket clients
+            broadcastNewFrame();
+          }
+        });
+
+        buffer = buffer.slice(4 + frameSize);
+      } else {
+        break;
+      }
+    }
+  });
+
+  socket.on('close', () => {
+    console.log('TCP client disconnected');
+  });
+
+  socket.on('error', (err) => {
+    console.error('TCP Socket error:', err);
+  });
 });
 
-server.on("listening", () => {
-    console.log(`✅ UDP Server listening on ${UDP_HOST}:${UDP_PORT}`);
+// Start TCP server
+const TCP_PORT = 5005;
+tcpServer.listen(TCP_PORT, () => {
+  console.log(`TCP server listening on port ${TCP_PORT}`);
 });
 
-server.bind(UDP_PORT, UDP_HOST);
+// Create WebSocket server
+const wss = new WebSocket.Server({ port: 8080 });
+console.log(`WebSocket server listening on port 8080`);
 
-console.log("✅ WebSocket server running on ws://localhost:8080");
+function broadcastNewFrame() {
+  wss.clients.forEach((client) => {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send('new_frame');
+    }
+  });
+}
