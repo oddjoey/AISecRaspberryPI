@@ -108,9 +108,10 @@ if __name__ == "__main__":
     config = picam2.create_preview_configuration(main, lores=lores, controls=controls)
     picam2.configure(config)    
 
+    picam2.start_preview(Preview.QTGL, x=0, y=0, width=VIDEO_WIDTH, height=VIDEO_HEIGHT)
     picam2.start()
     picam2.start_recording(MJPEGEncoder(), SocketOutput())
-    picam2.pre_callback = draw_objects
+    #picam2.pre_callback = draw_objects
 
     joeys_embedding = np.load("faces/face0_emb.npy")
 
