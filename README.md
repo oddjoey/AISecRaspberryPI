@@ -36,3 +36,5 @@ Guides/Info of frameworks/libraries used in our project
 [Hailo Raspberry Pi 5 Examples](https://github.com/hailo-ai/hailo-rpi5-examples)
 
 [Hailo Applications Infrastructure](https://github.com/hailo-ai/hailo-apps-infra)
+
+[Gender-and-Age-Detection](https://github.com/smahesh29/Gender-and-Age-Detection/tree/master)
