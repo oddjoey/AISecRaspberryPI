@@ -1,11 +1,12 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import Link from "next/link"
 import { FaHome, FaVideo, FaUsers, FaCamera, FaCog, FaSignOutAlt, FaQuestionCircle, FaBars, FaEdit, FaHistory, FaUserPlus, FaTrash } from 'react-icons/fa';
 import { MdSecurity } from 'react-icons/md';
 import { BiCctv } from 'react-icons/bi';
 import SidebarLink from './SidebarLink';
 import VoiceCommandButton from './VoiceCommandButton';
+import {ThemeContext } from './ThemeProvider.tsx';
 
 const Guests = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -16,18 +17,17 @@ const Guests = () => {
   const [expirationTime, setExpirationTime] = useState('');
   const [licensePlate, setLicensePlate] = useState('');
   const [searchProfiles, setSearchProfiles] = useState('');
+  const { isDarkMode } = useContext(ThemeContext);
 
   const handleVoiceCommand = (command) => {
     alert(`Voice Command recognized: "${command}"`);
   };
 
   const handleGenerateAccessCode = () => {
-    // Implementation for generating access code
     console.log('Generating access code...');
   };
 
   const handleAddToBlacklist = () => {
-    // Implementation for adding to blacklist
     console.log('Adding to blacklist...');
   };
 

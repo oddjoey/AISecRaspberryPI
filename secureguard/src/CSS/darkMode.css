@@ -1,3 +1,4 @@
+/* CSS/darkMode.css */
 body.dark {
   background-color: #121212;
   color: #e0e0e0;
@@ -95,14 +96,57 @@ body.dark .text-black {
   color: #e0e0e0;
 }
 
+/* Fix for the moon icon in dark mode */
 .dark-mode-toggle svg {
   color: white;
 }
 
+/* Optional: Specific styling for moon and sun icons */
 .dark-mode-toggle .fa-moon {
   color: white;
 }
 
 .dark-mode-toggle .fa-sun {
-  color: #FFD700;
+  color: #FFD700; /* Gold color for the sun icon */
+}
+
+/* Security Panel Dark Mode Fixes */
+body.dark .bg-gray-100 {
+  background-color: #161616;
+}
+
+body.dark .hover\:bg-gray-50:hover {
+  background-color: #2a2a2a;
+}
+
+body.dark .text-gray-500,
+body.dark .text-gray-700 {
+  color: #a0a0a0;
+}
+
+body.dark .bg-gray-200 {
+  background-color: #3d3d3d;
+}
+
+body.dark .border-b {
+  border-color: #333;
+}
+
+/* Fix for specific components */
+body.dark .relative.inline-block .bg-white {
+  background-color: #e0e0e0;
+}
+
+/* For nested components that need to remain white */
+body.dark .peer-checked\:after\:border-white:after {
+  border-color: #ffffff !important;
+}
+
+body.dark .after\:bg-white:after {
+  background-color: #ffffff !important;
+}
+
+/* Alert item fixes */
+body.dark .bg-gray-50 {
+  background-color: #252525;
 }

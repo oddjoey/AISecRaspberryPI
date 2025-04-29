@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useContext  } from 'react';
 import Link from 'next/link'
 import { FaHome, FaVideo, FaUsers, FaCog, FaSignOutAlt, FaQuestionCircle, FaCamera, FaBars, FaSearch, FaExclamationTriangle, FaUserSecret, FaTruck } from 'react-icons/fa';
 import { MdSecurity } from 'react-icons/md';
@@ -8,10 +8,12 @@ import VideoStream from './VideoStream';
 import SidebarLink from './SidebarLink';
 import VoiceCommandButton from './VoiceCommandButton';
 import Cameranotice from './Cameranotice';
+import { ThemeContext, themeContext } from './ThemeProvider.tsx';
 
 const LiveFeed = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [enableCamera1, setEnableCamera1] = useState(false);
+  const { isDarkMode } = useContext(ThemeContext);
 
   const cameraFeeds = [
     { id: 2, name: 'Parking Lot', location: 'Camera Feed 2' },

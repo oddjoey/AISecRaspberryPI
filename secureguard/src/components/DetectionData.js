@@ -1,11 +1,12 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import Link from 'next/link'
 import { FaHome, FaVideo, FaUsers, FaCog, FaSignOutAlt, FaQuestionCircle, FaUserPlus, FaUserMinus, FaCheck, FaBan, FaCamera, FaBars, FaTimes } from 'react-icons/fa';
 import { MdSecurity } from 'react-icons/md';
 import { BiCctv } from 'react-icons/bi';
 import SidebarLink from './SidebarLink';
 import VoiceCommandButton from './VoiceCommandButton';
+import { ThemeContext } from './ThemeProvider.tsx';
 
 const DetectionData = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -26,6 +27,8 @@ const DetectionData = () => {
   const [showViewAllModal, setShowViewAllModal] = useState(false);
   const [viewAllType, setViewAllType] = useState('recognized');
   const [searchQuery, setSearchQuery] = useState('');
+
+  const { isDarkMode } = useContext(ThemeContext);
 
   // Sample face data - this would come from an API if we need to test more
   const [recognizedFaces, setRecognizedFaces] = useState([

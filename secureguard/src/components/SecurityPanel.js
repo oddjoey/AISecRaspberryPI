@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import Link from 'next/link'
 import {
   FaHome, FaVideo, FaUsers, FaCog, FaSignOutAlt, FaQuestionCircle, FaCamera, FaBars, FaDoorClosed,
@@ -9,9 +9,11 @@ import { MdSecurity } from 'react-icons/md';
 import { BiCctv } from 'react-icons/bi';
 import SidebarLink from './SidebarLink';
 import VoiceCommandButton from './VoiceCommandButton';
+import { ThemeContext } from './ThemeProvider.tsx';
 
 const SecurityPanel = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const { isDarkMode } = useContext(ThemeContext);
 
   const notifications = [
     { icon: <FaDoorClosed className="text-blue-500" />, title: "Front Door Opened", time: "2025-03-15 08:30 AM" },
@@ -142,7 +144,6 @@ const SecurityPanel = () => {
   );
 };
 
-// ...existing components...
 const Toggle = () => (
   <div className="relative inline-block w-12 h-6 rounded-full bg-gray-200">
     <div className="absolute right-1 top-1 w-4 h-4 rounded-full bg-white shadow"></div>
