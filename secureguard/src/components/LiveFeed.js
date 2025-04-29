@@ -39,7 +39,7 @@ const LiveFeed = () => {
   }, []);
 
   return (
-    <Cameranotice cameraState={enableCamera1 ? 'ON' : 'OFF'} />
+   <> <Cameranotice cameraState={enableCamera1 ? 'ON' : 'OFF'} />
     <div className="flex h-screen bg-gray-100">
       {/* Mobile menu button */}
       <button 
@@ -166,7 +166,7 @@ const LiveFeed = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div> </>
   );
 };
 
