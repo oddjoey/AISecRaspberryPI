@@ -159,6 +159,8 @@ const DetectionData = () => {
     setSelectedFaceToRemove(null);
   };
 
+  const handleAddFaceClick = () => {}
+
   const handleFaceSelectForRemoval = (face) => {
     setSelectedFaceToRemove(face);
   };
@@ -266,6 +268,25 @@ const DetectionData = () => {
             >
               <FaUserMinus /> <span>Remove Guest</span>
             </button>
+            <button
+              onClick={handleAddFaceClick}
+              className="flex items-center space-x-2 bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
+            >
+              <FaUserPlus /> <span>Add Face</span>
+            </button>
+            <div className="relative">
+              <input
+              type="file"
+              id="face_upload"
+              accept="image/*"
+              onChange={(e) => console.log(e.target.files[0])}
+              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+              aria-label="Upload face image"
+              />
+              <div className="flex items-center space-x-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                <FaCamera /> <span>Choose File</span>
+              </div>
+            </div>
           </div>
           <div className="grid grid-cols-2 gap-8">
             <div className="bg-white rounded-lg shadow p-5 text-left">
