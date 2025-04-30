@@ -38,3 +38,5 @@ Guides/Info of frameworks/libraries used in our project
 [Hailo Applications Infrastructure](https://github.com/hailo-ai/hailo-apps-infra)
 
 [Gender-and-Age-Detection](https://github.com/smahesh29/Gender-and-Age-Detection/tree/master)
+
+[Assit the Structure and debugging](https://openai.com/)
