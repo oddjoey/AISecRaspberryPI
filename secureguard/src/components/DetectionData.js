@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef, useContext } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import Link from 'next/link'
 import { FaHome, FaVideo, FaUsers, FaCog, FaSignOutAlt, FaQuestionCircle, FaUserPlus, FaUserMinus, FaCheck, FaBan, FaCamera, FaBars, FaTimes } from 'react-icons/fa';
 import { MdSecurity } from 'react-icons/md';
@@ -21,7 +21,7 @@ const DetectionData = () => {
     name: '',
     relation: '',
     accessLevel: 'Limited'
-  });
+});
   const [showRemoveGuestModal, setShowRemoveGuestModal] = useState(false);
   const [selectedFaceToRemove, setSelectedFaceToRemove] = useState(null);
   const [showViewAllModal, setShowViewAllModal] = useState(false);
@@ -29,6 +29,9 @@ const DetectionData = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const { isDarkMode } = useContext(ThemeContext);
+
+  const ws = useRef(null);
+  const faceFile = useRef(null);
 
   // Sample face data - this would come from an API if we need to test more
   const [recognizedFaces, setRecognizedFaces] = useState([
@@ -55,6 +58,22 @@ const DetectionData = () => {
       alerts: 0
     },
   ]);
+
+  useEffect(() => {
+    ws.current = new WebSocket('ws://192.168.1.119:8765');
+
+    ws.current.onopen = () => {
+      console.log('WebSocket connected!');
+    };
+
+    ws.current.onmessage = (event) => {
+      console.log('Received from server:', event.data);
+    };
+
+    ws.current.onerror = (error) => {
+      console.error('WebSocket error:', error);
+    };
+  }, []);
 
   const handleFaceClick = (face) => {
     setSelectedFace(face);
@@ -159,7 +178,18 @@ const DetectionData = () => {
     setSelectedFaceToRemove(null);
   };
 
-  const handleAddFaceClick = () => {}
+  const handleAddFaceClick = () => {
+    console.log(faceFile.current, ws.current)
+    if (!faceFile.current || !ws.current || ws.current.readyState !== WebSocket.OPEN) 
+      return;
+
+    const encoder = new TextEncoder();
+    const textBytes = encoder.encode(faceFile.current.name);
+    const header = new Uint32Array([textBytes.length]);
+    const arrayBuffer = new Blob([header.buffer, textBytes, faceFile.current])
+
+    ws.current?.send(arrayBuffer);
+  }
 
   const handleFaceSelectForRemoval = (face) => {
     setSelectedFaceToRemove(face);
@@ -278,8 +308,8 @@ const DetectionData = () => {
               <input
               type="file"
               id="face_upload"
-              accept="image/*"
-              onChange={(e) => console.log(e.target.files[0])}
+              accept="image/jpg"
+              onChange={(e) => {faceFile.current = e.target.files?.[0]}}
               className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
               aria-label="Upload face image"
               />
