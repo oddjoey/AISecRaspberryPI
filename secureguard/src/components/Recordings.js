@@ -71,6 +71,9 @@ const Recordings = () => {
           <Link href="/recordings">
             <SidebarLink icon={<FaCamera />} text="Recordings" />
           </Link>
+          <Link href="/information">
+            <SidebarLink icon={<FaCamera />} text="Information" />
+          </Link>
           <Link href="/account-settings">
             <SidebarLink icon={<FaCog />} text="Account Settings" />
           </Link>
