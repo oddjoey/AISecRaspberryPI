@@ -57,6 +57,7 @@ const SecurityPanel = () => {
           <Link href="/live-feed"><SidebarLink icon={<FaVideo />} text="Live Feed" /></Link>
           <Link href="/guests"><SidebarLink icon={<FaUsers />} text="Guests" /></Link>
           <Link href="/recordings"><SidebarLink icon={<FaCamera />} text="Recordings" /></Link>
+          <Link href="/information"><SidebarLink icon={<FaCamera />} text="Information" /></Link>
           <Link href="/account-settings"><SidebarLink icon={<FaCog />} text="Account Settings" /></Link>
           <Link href="/system-settings"><SidebarLink icon={<FaCog />} text="System Settings" /></Link>
         </nav>
