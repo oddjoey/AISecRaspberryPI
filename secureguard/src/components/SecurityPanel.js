@@ -10,10 +10,12 @@ import { BiCctv } from 'react-icons/bi';
 import SidebarLink from './SidebarLink';
 import VoiceCommandButton from './VoiceCommandButton';
 import { ThemeContext } from './ThemeProvider.tsx';
+import { Rasppinotice } from './Rasppinotice';
 
 const SecurityPanel = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const { isDarkMode } = useContext(ThemeContext);
+  const [raspberryPiState, setRaspberryPiState] = useState('OFFLINE');
 
   const notifications = [
     { icon: <FaDoorClosed className="text-blue-500" />, title: "Front Door Opened", time: "2025-03-15 08:30 AM" },
@@ -30,6 +32,21 @@ const SecurityPanel = () => {
 
   const handleVoiceCommand = (command) => {
     alert(`Voice Command recognized: "${command}"`);
+  };
+
+  const connectToRaspberryPi = async () => {
+    try {
+      setRaspberryPiState('CONNECTING');
+      
+      // Simulate connection process
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // If connection is successful
+      setRaspberryPiState('ONLINE');
+    } catch (error) {
+      console.error('Failed to connect to Raspberry Pi:', error);
+      setRaspberryPiState('OFFLINE');
+    }
   };
 
   return (
