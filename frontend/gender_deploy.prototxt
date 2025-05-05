@@ -1,3 +1,4 @@
+//GET FROM https://github.com/smahesh29/Gender-and-Age-Detection/blob/master/gender_deploy.prototxt
 name: "CaffeNet"
 input: "data"
 input_dim: 10
