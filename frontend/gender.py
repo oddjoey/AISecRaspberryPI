@@ -1,4 +1,7 @@
-# Coporate with https://github.com/smahesh29/Gender-and-Age-Detection/blob/master/gender_net.caffemodel and chatgpt
+# Based on resources from:
+# https://github.com/smahesh29/Gender-and-Age-Detection
+# Includes use of 'detect.py' by Mahesh Sawant, licensed under the MIT License.
+# Assistance and guidance provided by ChatGPT.
 import io
 import cv2  # type: ignore
 import time
