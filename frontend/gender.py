@@ -1,6 +1,5 @@
-# Based on resources from:
-# https://github.com/smahesh29/Gender-and-Age-Detection
-# Includes use of 'detect.py' by Mahesh Sawant, licensed under the MIT License.
+# Get from https://github.com/smahesh29/Gender-and-Age-Detection
+# Using 'detect.py' by Mahesh Sawant, licensed under the MIT License.
 # Assistance and guidance provided by ChatGPT.
 import io
 import cv2  # type: ignore
