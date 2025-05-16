@@ -1,4 +1,5 @@
 //Get from https://github.com/smahesh29/Gender-and-Age-Detection/tree/master
+// use 'age_deploy.prototxt' by Mahesh Sawant, licensed under the MIT License.
 name: "CaffeNet"
 input: "data"
 input_dim: 10
