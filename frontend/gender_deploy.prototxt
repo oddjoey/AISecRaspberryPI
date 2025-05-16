@@ -1,4 +1,5 @@
-//GET FROM https://github.com/smahesh29/Gender-and-Age-Detection/blob/master/gender_deploy.prototxt
+# https://github.com/smahesh29/Gender-and-Age-Detection
+# Get from 'gender_deploy.prototxt' by Mahesh Sawant, licensed under the MIT License.
 name: "CaffeNet"
 input: "data"
 input_dim: 10
